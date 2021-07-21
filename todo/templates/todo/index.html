@@ -28,25 +28,35 @@
   </script>
 
 </head>
+   <h2>ゲーム画面</h2>
+
+
+----------------------------------------<br>
 
 {% extends 'todo/base.html' %}
 
 {% block content %}
 
-    <h2>TODOリスト</h2>
+    <h2>タスク</h2>
 
+    <!--
     {% if category %}
         <h2>カテゴリー: {{ category.title }}</h2>
     {% endif %}
+    -->
 
     {% for todos in todo %}
-        <ul>
-            <li>{{ todos.title }}--{{ todos.created_at }}</li>
+
+          ****************************************<br>
+            <b>{{ todos.title }}</b><br>
+                 カテゴリー:{{todos.category}}<br>
+                 締切日:<span style="color:red">{{ todos.deadline_date}}</span>
             <form method="POST" action="{% url 'todo:delete' todos.pk %}">
                 {% csrf_token %}
                 <button type="submit">削除</button>
             </form>
-        </ul>
+          ****************************************<br>
+
     {% endfor %}
 
     <button type="button" class="btn" onclick="openWinTask()">タスク管理を登録</button>
