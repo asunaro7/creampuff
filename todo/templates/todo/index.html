@@ -53,6 +53,7 @@
                  締切日:<span style="color:red">{{ todos.deadline_date}}</span>
             <form method="POST" action="{% url 'todo:delete' todos.pk %}">
                 {% csrf_token %}
+              難易度：{{todos.level}}<br>
                 <button type="submit">削除</button>
             </form>
           ****************************************<br>
