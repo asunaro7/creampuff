@@ -24,7 +24,20 @@ class Todo(models.Model):
     #text = models.TextField('詳細')
     created_date = models.DateTimeField('作成日',default=timezone.now)
     deadline_date = models.DateTimeField('締切日',blank=True, null=True)
-
+    
+    l_category = (
+      ('1', '易'),
+      ('2', 'やや易'),
+      ('3', '普通'),
+      ('4', 'やや難'),
+      ('5', '難'),
+    )
+    level = models.CharField(
+         '難易度(易 1〜5 難)',
+         max_length=5,
+         default='',
+         choices=l_category
+         )
 
     def publish(self):
         self.published_date = timezone.now()
