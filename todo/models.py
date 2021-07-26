@@ -14,17 +14,14 @@ class Category(models.Model):
         return self.title
 
 
-"""
-タイトル、日付テーブルとカテゴリーを紐づけるためのテーブル。
-PROTECTは紐づいているデータが存在すれば消されない
-"""
+"""タスク内容"""
 class Todo(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     title = models.CharField('タイトル', max_length=50)
     #text = models.TextField('詳細')
     created_date = models.DateTimeField('作成日',default=timezone.now)
     deadline_date = models.DateTimeField('締切日',blank=True, null=True)
-    
+
     l_category = (
       ('1', '易'),
       ('2', 'やや易'),

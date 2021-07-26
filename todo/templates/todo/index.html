@@ -1,7 +1,10 @@
 <!-- /todo/templates/todo/index.html -->
+{% load static %}
 <head>
-
-<!--  <link rel="stylesheet" href="todo/style3.css">  -->
+  <title>RPGタスク</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
   <script>
 
@@ -27,34 +30,32 @@
 
   </script>
 
+
 </head>
    <h2>ゲーム画面</h2>
 
+   {% block contents %}
+   {% endblock %}
 
 ----------------------------------------<br>
 
-{% extends 'todo/base.html' %}
-
-{% block content %}
 
     <h2>タスク</h2>
-
-    <!--
-    {% if category %}
-        <h2>カテゴリー: {{ category.title }}</h2>
-    {% endif %}
-    -->
 
     {% for todos in todo %}
 
           ****************************************<br>
-            <b>{{ todos.title }}</b><br>
+            <font size="5"><b>{{ todos.title }}</b></font><br>
                  カテゴリー:{{todos.category}}<br>
-                 締切日:<span style="color:red">{{ todos.deadline_date}}</span>
+                 締切日:<span style="color:red">{{ todos.deadline_date}}</span><br>
+                 難易度：{{todos.level}}<br>
             <form method="POST" action="{% url 'todo:delete' todos.pk %}">
                 {% csrf_token %}
-              難易度：{{todos.level}}<br>
                 <button type="submit">削除</button>
+            </form>
+            <form method="POST" action="{% url 'todo:encount' todos.pk %}">
+                {% csrf_token %}
+                <button type="submit"><span style="color:red">完了</span></button>
             </form>
           ****************************************<br>
 
@@ -63,5 +64,3 @@
     <button type="button" class="btn" onclick="openWinTask()">タスク管理を登録</button>
     <button type="button" class="btn" onclick="openWinGame()">ゲーム</button>
     <button type="button" class="btn" onclick="openWinBuki()">武器を購入</button>
-
-{% endblock %}
