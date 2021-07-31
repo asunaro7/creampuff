@@ -51,7 +51,6 @@
                  難易度：{{todos.level}}<br>
             <form method="POST" action="{% url 'todo:delete' todos.pk %}">
                 {% csrf_token %}
-                <button type="submit">削除</button>
                 <form method="get" action="{% url 'todo:delete' todos.pk %}">
                     <input type="submit"
                       value="削除"
