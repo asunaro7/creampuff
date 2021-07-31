@@ -52,6 +52,12 @@
             <form method="POST" action="{% url 'todo:delete' todos.pk %}">
                 {% csrf_token %}
                 <button type="submit">削除</button>
+                <form method="get" action="{% url 'todo:delete' todos.pk %}">
+                    <input type="submit"
+                      value="削除"
+                      onclick="return confirm('本当に削除しますか？');"
+                    >
+                </form>
             </form>
             <form method="POST" action="{% url 'todo:encount' todos.pk %}">
                 {% csrf_token %}
