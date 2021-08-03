@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+     <title>RPGタスク</title>
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    {% block contents %}
+    <div class="post">
+      {% if todos.created_date %}
+            <div class="date">
+                {{ todos.created_date }}
+            </div>
+        {% endif %}
+        <a class="btn btn-default" href="{% url 'todo:edit' todos.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <h2>{{ todos.title }}</h2>
+        <p>カテゴリー:{{ todos.category }}</p>
+        <p>締め切り:<span style="color:red">{{ todos.deadline_date }}</span></p>
+        <p>難易度:{{ todos.level }}</p>
+        <p><a href="{% url 'todo:index' %}">トップページに戻る</a></p>
+    </div>
+    {% endblock %}
+
+  </body>
+</html>
