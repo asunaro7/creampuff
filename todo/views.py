@@ -1,7 +1,7 @@
 # /todo/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Todo, Category, Game_monster, User
+from .models import Todo, Category, Game_monster, User, CharData, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower
 from .forms import TodoForm
 from django.utils import timezone
 
