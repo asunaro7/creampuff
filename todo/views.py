@@ -77,3 +77,22 @@ def start(request):
     monster.save()
     User.attack = 0
     return redirect('todo:index')
+
+"""武器購入画面表示"""
+def buyWeapon2(request):
+    todo = Todo.objects.order_by('title')
+    return render(request, 'todo/buyWeapon.html', {'todo': todo})
+
+"""キャラクタ表示"""
+def dispCharData(request):
+    todo = CharData.objects.order_by('myName')
+    return render(request, 'todo/dispCharData.html', {'todo': todo})
+
+"""装備変更表示"""
+def changeEquipment(request):
+    cData = CharData.objects.order_by('myName')
+    wpn = MyWeapon.objects.order_by('myName')
+    amrH = MyArmorHead.objects.order_by('myName')
+    amrU = MyArmorUpper.objects.order_by('myName')
+    amrL = MyArmorLower.objects.order_by('myName')
+    return render(request, 'todo/changeEquipment.html', {'charData': cData, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
