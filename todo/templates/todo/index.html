@@ -19,7 +19,7 @@
     .todo-gameblock{
       margin: 20px 20px 0 20px;     /*上、右、下、左*/
       width: 100vw;
-      height: 50px;
+      height: 100px;
       background-color: #c0c0c0;
     }
 
@@ -82,16 +82,29 @@
 
 
 </head>
-   <h2>ゲーム画面</h2>
+<body>
 
-   {% block contents %}
-   {% endblock %}
+   <h2>ゲーム画面</h2>
    <div class="todo-gameblock">
+     <form method="POST" action="{% url 'todo:start' %}">
+         {% csrf_token %}
+         <button type="submit"><span style="color:red">ゲーム開始</span></button>
+     </form>
+     {% block contents %}
+       現在の攻撃力チャージ数:{{ user.attack }}<br>
+       {{ user.brave_name }} は {{ monster.name }} に 攻撃した <br>
+       {{ monster.name }} の HP は {{ monster.hp }} になった
+     {% endblock %}
    </div>
+</body>
 
 <!----------------------------------------<br>-->
 
     <h2>タスク</h2>
+
+    {% if delete %}
+    <p>delete</p>
+    {% endif %}
 
     <div class="todo-taskblock">
         <div class="todo-allitem">
@@ -101,9 +114,9 @@
 
         <!--  ****************************************<br>-->
             <a href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a><br>
-                 カテゴリー:{{todos.category}}<br>
-                 締切日:<span style="color:red">{{ todos.deadline_date}}</span><br>
-                 難易度：{{todos.level}}<br>
+                 カテゴリー:{{　todos.category　}}<br>
+                 締切日:<span style="color:red">{{ todos.deadline_date　}}</span><br>
+                 難易度：{{　todos.level　}}<br>
             <form method="POST" action="{% url 'todo:delete' todos.pk %}">
                 {% csrf_token %}
                 <form method="get" action="{% url 'todo:delete' todos.pk %}">
@@ -124,7 +137,7 @@
   </div>
 
   <div class="todo-btn">
-    <button type="button" class="btn" onclick="openWinTask()">タスク管理を登録</button>
+    <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
     <button type="button" class="btn" onclick="openWinGame()">ゲーム</button>
     <button type="button" class="btn" onclick="openWinBuki()">武器を購入</button>
   </div>
