@@ -1,5 +1,4 @@
 # /todo/models.py
-
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -8,7 +7,6 @@ from django.utils import timezone
 """カテゴリー"""
 class Category(models.Model):
     title = models.CharField('タイトル', max_length=20)
-
     """self.titleとすることでadmin管理画面にてインスタンス変数として表示される"""
     def __str__(self):
         return self.title
@@ -21,7 +19,6 @@ class Todo(models.Model):
     #text = models.TextField('詳細')
     created_date = models.DateTimeField('作成日',default=timezone.now)
     deadline_date = models.DateTimeField('締切日',blank=True, null=True)
-
     l_category = (
       ('1', '易'),
       ('2', 'やや易'),
@@ -42,3 +39,19 @@ class Todo(models.Model):
 
     def __str__(self):
         return self.title
+
+"""ゲーム:モンスター"""
+class Game_monster(models.Model):
+    name = models.CharField('名前', max_length=10)
+    hp = models.PositiveIntegerField('HP')
+
+    def __str__(self):
+        return self.name
+
+"""ゲーム:攻撃"""
+class User(models.Model):
+    brave_name = '勇者くん'
+    attack = 0
+
+    def __str__(self):
+        return self.attack

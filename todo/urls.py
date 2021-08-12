@@ -11,6 +11,7 @@ urlpatterns = [
         path('<int:id>/delete/', views.delete, name='delete'),  # ←削除機能用
         path('todo/<str:category>/', views.todo_category, name='todo_category'),  # ←カテゴリ
         path('<int:id>/game/', views.encount, name='encount'),
+        path('start/', views.start, name='start'),
         path('form/', views.new, name='new'),
         path('form/<int:pk>/', views.detail, name='detail'),
         path('form/<int:pk>/edit/', views.edit, name='edit'),
