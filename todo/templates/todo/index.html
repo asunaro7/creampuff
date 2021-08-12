@@ -53,29 +53,16 @@
 
   <script>
 
-  var myWindow,myWindow2,myWindow3;
+  var myWindow,myWindow2,myWindow3,myWindow5,myWindow6,myWindow7;
 
   function openWinTask() {
     myWindow = window.open("{% url 'todo:new' %}",'_blank');
   }
-    function openWinGame() {
-    myWindow2 = window.open("", "myWindow2", "top=200,left=200,width=600,height=300");
-    myWindow2.document.write("<p>ゲーム</p>");
-    myWindow2.document.write("<p>　名前　XXXXX</p>");
-    myWindow2.document.write("<p>　HP　　10000</p>");
-
-    myWindow2.document.write("<p>　レベル　30Lv</p>");
-    myWindow2.document.write("<p>　武器　武器１</p>");
-    myWindow2.document.write("<p>　装備　装備１</p>");
-    myWindow2.document.write("<p>　持ち金　1000$</p>");
+  function openWinBuyWeapon2() {
+    myWindow6 = window.open("buyWeapon2", "myWindow6", "top=200,left=200,width=600,height=300");
   }
-  function openWinBuki() {
-    myWindow3 = window.open("", "myWindow3", "top=200,left=200,width=600,height=300");
-    myWindow3.document.write("<p>武器購入</p>");
-    myWindow3.document.write("<p>　持ち金 1000$</p>");
-    myWindow3.document.write("<p>　武器１  攻撃力  1000  回復力  100　　1000$</p>");
-    myWindow3.document.write("<p>　武器２  攻撃力  2000  回復力  200　　2000$</p>");
-    myWindow3.document.write("<p>　武器３  攻撃力  3000  回復力  300　　3000$</p>");
+  function openWinDispCharData() {
+    myWindow7 = window.open("dispCharData", "myWindow7", "top=200,left=200,width=600,height=300");
   }
 
   </script>
@@ -138,7 +125,7 @@
 
   <div class="todo-btn">
     <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
-    <button type="button" class="btn" onclick="openWinGame()">ゲーム</button>
-    <button type="button" class="btn" onclick="openWinBuki()">武器を購入</button>
+    <button type="button" class="btn" onclick="openWinBuyWeapon2()">武器を購入</button>
+    <button type="button" class="btn" onclick="openWinDispCharData()">ゲーム</button>
   </div>
 </div>
