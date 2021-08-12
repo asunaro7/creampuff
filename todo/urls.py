@@ -15,4 +15,7 @@ urlpatterns = [
         path('form/', views.new, name='new'),
         path('form/<int:pk>/', views.detail, name='detail'),
         path('form/<int:pk>/edit/', views.edit, name='edit'),
+        path('buyWeapon2', views.buyWeapon2, name='buyWeapon2'),    # ←追加
+        path('dispCharData', views.dispCharData, name='dispCharData'),    # ←追加
+        path('changeEquipment', views.changeEquipment, name='changeEquipment'),    # ←追加
 ]
