@@ -56,29 +56,6 @@ class User(models.Model):
     def __str__(self):
         return self.attack
 
-"""キャラクタデータ"""
-class CharData(models.Model):
-    myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
-    myHP = models.IntegerField('HP',blank=True, null=True,default=0)
-    myLevel= models.IntegerField('レベル',blank=True, null=True,default=0)
-    myWeapon = models.CharField('武器',blank=True, null=True,default="", max_length=50)
-    myArmorHead  = models.CharField('防具　頭',blank=True, null=True,default="", max_length=50)
-    myArmorUpper  = models.CharField('防具　上',blank=True, null=True,default="", max_length=50)
-    myArmorLower  = models.CharField('防具　下',blank=True, null=True,default="", max_length=50)
-    myArmorAccessory  = models.CharField('防具　アクセサリ',blank=True, null=True,default="", max_length=50)
-    myMoney = models.IntegerField('持ち金',blank=True, null=True,default=0)
-
-    l_category = (
-      ('1', '易'),
-      ('2', 'やや易'),
-      ('3', '普通'),
-      ('4', 'やや難'),
-      ('5', '難'),
-    )
-
-    def __str__(self):
-        return self.myName
-
 """所持武器データ"""
 class MyWeapon(models.Model):
     myName = models.CharField('武器名',blank=True, null=True,default="", max_length=50)
@@ -128,6 +105,38 @@ class MyArmorLower(models.Model):
     hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=0)
     price  = models.IntegerField('購入額',blank=True, null=True,default=0)
     num  = models.IntegerField('所持数',blank=True, null=True,default=0)
+
+    def __str__(self):
+        return self.myName
+
+"""キャラクタデータ"""
+class CharData(models.Model):
+#    title = models.CharField('タイトル', max_length=50)
+    myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
+#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+    myWeapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="")
+    myArmorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="")
+    myArmorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="")
+    myArmorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="")
+    myHP = models.IntegerField('HP',blank=True, null=True,default=0)
+    myLevel= models.IntegerField('レベル',blank=True, null=True,default=0)
+    myMoney = models.IntegerField('持ち金',blank=True, null=True,default=0)
+
+    def __str__(self):
+        return self.myName
+
+"""キャラクタデータ"""
+class CharData2(models.Model):
+#    title = models.CharField('タイトル', max_length=50)
+    myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
+#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+    myWeapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="")
+    myArmorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="")
+    myArmorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="")
+    myArmorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="")
+    myHP = models.IntegerField('HP',blank=True, null=True,default=0)
+    myLevel= models.IntegerField('レベル',blank=True, null=True,default=0)
+    myMoney = models.IntegerField('持ち金',blank=True, null=True,default=0)
 
     def __str__(self):
         return self.myName
