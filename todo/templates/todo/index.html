@@ -61,14 +61,35 @@
     .todo-item{
       text-align: left;
       border-bottom: 1px solid #3f5170;
+<<<<<<< HEAD
+      margin: 10px 10px 0 10px;
+      background-color: #99ffcc;
+    }
+=======
+<<<<<<< HEAD
+=======
       margin: 10px 10px 0 10px;
       background-color: #99ffcc;
     }
     .todo-item:hover{
       text-align: left;
       border-bottom: 1px solid #3f5170;
+>>>>>>> origin/master
+      margin: 10px 10px 0 10px;
+      background-color: #99ffcc;
+    }
+<<<<<<< HEAD
+>>>>>>> origin/master
+    .todo-item:hover{
+      text-align: left;
+      border-bottom: 1px solid #3f5170;
       margin: 10px 10px 0 10px;
     }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
     .todo-rightblock{
       display: flex;                /*内部要素の横並び*/
       text-align: left;
@@ -101,15 +122,39 @@
 
   </style>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+  function openWinTask() {
+    myWindow = window.open("{% url 'todo:new' %}",'_blank');
+  }
+  function openWinBuyWeapon2() {
+    myWindow6 = window.open("buyWeapon2", "myWindow6", "top=200,left=200,width=600,height=450");
+  }
+  function openWinDispCharData() {
+    myWindow7 = window.open("dispCharData", "myWindow7", "top=200,left=200,width=600,height=450");
+  }
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
+>>>>>>> origin/master
+>>>>>>> origin/master
 
 </head>
 
 
 <body>
 <!--<body onload="LoadProc();">-->
+<<<<<<< HEAD
 
     <h2>ゲーム画面</h2>
 
+=======
+
+    <h2>ゲーム画面</h2>
+
+>>>>>>> origin/master
     <div class="todo-gameblock">
      <form method="POST" action="{% url 'todo:start' %}">
          {% csrf_token %}

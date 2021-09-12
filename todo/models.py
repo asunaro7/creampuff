@@ -54,7 +54,19 @@ class Game_monster(models.Model):
     attack = 0
 
     def __str__(self):
+<<<<<<< HEAD
         return self.attack"""
+=======
+<<<<<<< HEAD
+        return self.attack"""
+=======
+<<<<<<< HEAD
+        return self.attack"""
+=======
+        return self.attack
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
+>>>>>>> origin/master
+>>>>>>> origin/master
 
 """所持武器データ"""
 class MyWeapon(models.Model):
@@ -111,6 +123,13 @@ class MyArmorLower(models.Model):
     def __str__(self):
         return self.myName
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/master
+>>>>>>> origin/master
 """ゲーム:攻撃"""
 class User(models.Model):
     attack= models.IntegerField('attack',blank=True, null=True,default=0)
@@ -144,3 +163,42 @@ class User2(models.Model):
 
     def __str__(self):
         return self.brave_name
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+"""キャラクタデータ"""
+class CharData(models.Model):
+#    title = models.CharField('タイトル', max_length=50)
+    myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
+#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+    myWeapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="")
+    myArmorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="")
+    myArmorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="")
+    myArmorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="")
+    myHP = models.IntegerField('HP',blank=True, null=True,default=0)
+    myLevel= models.IntegerField('レベル',blank=True, null=True,default=0)
+    myMoney = models.IntegerField('持ち金',blank=True, null=True,default=0)
+
+    def __str__(self):
+        return self.myName
+
+"""キャラクタデータ"""
+class CharData2(models.Model):
+#    title = models.CharField('タイトル', max_length=50)
+    myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
+#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+    myWeapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="")
+    myArmorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="")
+    myArmorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="")
+    myArmorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="")
+    myHP = models.IntegerField('HP',blank=True, null=True,default=0)
+    myLevel= models.IntegerField('レベル',blank=True, null=True,default=0)
+    myMoney = models.IntegerField('持ち金',blank=True, null=True,default=0)
+
+    def __str__(self):
+        return self.myName
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
+>>>>>>> origin/master
+>>>>>>> origin/master
