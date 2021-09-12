@@ -81,8 +81,8 @@
 
 
     <h2>購入武器一覧</h2>
-    {{ weapons.title }}
-    {{ weapons.l_category }}
+    {{ weapons.myName }}
+    {{ weapons.myName }}
     {{ buki1 }}<br>
     {{ buki2 }}<br>
     {{ buki3 }}<br>
@@ -90,19 +90,21 @@
 
     <div class="todo-taskblock">
         <div class="todo-allitem">
-          {{ weapons.title }}
-          {{ weapon2s.title }}
+          {{ weapons.myName }}
+          {{ weapon2s.myName }}
           {{ buki1 }}<br>
           {{ buki2 }}<br>
           {{ buki3 }}<br>
-            {% for weapons in todo %}
+            {% for weapons in weapon %}
 
               <div class="todo-item">
 <!--                  ****************************************<br>   -->
-                    <font size="5"><b>{{ weapons.title }}</b></font><br>
-                         カテゴリー:{{weapons.category}}<br>
-                         締切日:<span style="color:red">{{ weapons.deadline_date}}</span><br>
-                         難易度：{{weapons.level}}<br>
+
+
+                    <font size="5"><b>{{ weapons.myName }}</b></font><br>
+                         攻撃力:{{weapons.attackPower}}<br>
+                         価格:<span style="color:red">{{ weapons.price}}</span><br>
+                         所持数：{{weapons.num}}<br>
 <!--                  ****************************************<br>   -->
                 </div>
 

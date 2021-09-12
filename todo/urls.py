@@ -20,10 +20,25 @@ urlpatterns = [
         path('buyWeapon2', views.buyWeapon2, name='buyWeapon2'),    # ←追加
         path('dispCharData', views.dispCharData, name='dispCharData'),    # ←追加
         path('changeEquipment', views.changeEquipment, name='changeEquipment'),    # ←追加
+<<<<<<< HEAD
         path('<int:id>/buyWeapon/', views.buyWeapon, name='buyWeapon'),    # ←追加
+=======
+<<<<<<< HEAD
+        path('<int:id>/buyWeapon/', views.buyWeapon, name='buyWeapon'),    # ←追加
+=======
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
+>>>>>>> origin/master
         path('<int:id>/weaponSelect/', views.weaponSelect, name='weaponSelect'),    # ←追加
         path('<int:id>/armorHeadSelect/', views.armorHeadSelect, name='armorHeadSelect'),    # ←追加
         path('<int:id>/armorUpperSelect/', views.armorUpperSelect, name='armorUpperSelect'),    # ←追加
         path('<int:id>/armorLowerSelect/', views.armorLowerSelect, name='armorLowerSelect'),    # ←追加
         path('changeComplete', views.changeComplete, name='changeComplete'),    # ←追加
+<<<<<<< HEAD
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #追加
+=======
+<<<<<<< HEAD
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #追加
+=======
+]
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
+>>>>>>> origin/master
