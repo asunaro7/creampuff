@@ -1,7 +1,11 @@
 # /todo/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+<<<<<<< HEAD
 from .models import Todo, Category, Game_monster, User, User2, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower
+=======
+from .models import Todo, Category, Game_monster, User, CharData, CharData2, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
 from .forms import TodoForm
 from django.utils import timezone
 
@@ -95,8 +99,9 @@ def buyEquipment(request):
 
 """武器購入画面表示"""
 def buyWeapon2(request):
-    todo = Todo.objects.order_by('title')
-    return render(request, 'todo/buyWeapon.html', {'todo': todo})
+#    todo = Todo.objects.order_by('title')
+    weapon = MyWeapon.objects.order_by('myName')
+    return render(request, 'todo/buyWeapon.html', {'weapon': weapon})
 
 """装備購入（武器）"""
 def buyWeapon(request, id):
@@ -131,6 +136,7 @@ def dispCharData(request):
 
 """装備変更表示"""
 def changeEquipment(request):
+<<<<<<< HEAD
 #    user = User.objects.order_by('brave_name')
 #    user2 = User2.objects.order_by('brave_name')
     user11 = User.objects.first()
@@ -152,11 +158,34 @@ def changeEquipment(request):
         user12.armorUpper = user11.armorUpper
         user12.armorLower = user11.armorLower
         user12.save()
+=======
+    cData = CharData.objects.order_by('myName')
+    cData2 = CharData2.objects.order_by('myName')
+    cData11 = CharData.objects.get(pk=1)
+    print(CharData2.objects.count())
+    if CharData2.objects.count() >= 1:
+        cData12 = CharData2.objects.get(pk=1)
+        cData12.myName = cData11.myName
+        cData12.myWeapon = cData11.myWeapon
+        cData12.myArmorHead = cData11.myArmorHead
+        cData12.myArmorUpper = cData11.myArmorUpper
+        cData12.myArmorLower = cData11.myArmorLower
+        cData12.save()
+    else:
+        cData12 = CharData2.objects.create(id=1,myName="tairako",myArmorHead_id = 2,myArmorUpper_id = 2,myArmorLower_id = 2,myWeapon_id = 2)
+        cData12.myName = cData11.myName
+        cData12.myWeapon = cData11.myWeapon
+        cData12.myArmorHead = cData11.myArmorHead
+        cData12.myArmorUpper = cData11.myArmorUpper
+        cData12.myArmorLower = cData11.myArmorLower
+        cData12.save()
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
+<<<<<<< HEAD
     return render(request, 'todo/changeEquipment.html', {'user': user11,'user2': user12, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
 
 """装備変更選択（武器）"""
@@ -168,12 +197,26 @@ def weaponSelect(request, id):
     if weapon.num >= 1:
         user2.weapon = weapon
         user2.save()
+=======
+    return render(request, 'todo/changeEquipment.html', {'charData': cData11,'charData2': cData12, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+
+"""装備変更選択（武器）"""
+def weaponSelect(request, id):
+    from .models import CharData2
+    weapon = get_object_or_404(MyWeapon,pk=id)
+    cData = CharData.objects.get(pk=1)
+    cData2 = CharData2.objects.get(pk=1)
+    if weapon.num >= 1:
+        cData2.myWeapon = weapon
+        cData2.save()
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
+<<<<<<< HEAD
     return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
 #    return redirect('todo:changeEquipment')
 
@@ -186,12 +229,26 @@ def armorHeadSelect(request, id):
     if armorHead.num >= 1:
         user2.armorHead = armorHead
         user2.save()
+=======
+    return render(request, 'todo/changeEquipment.html', {'charData': cData,'charData2': cData2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+
+"""装備変更選択（防具　頭）"""
+def armorHeadSelect(request, id):
+    from .models import CharData2
+    armorHead = get_object_or_404(MyArmorHead,pk=id)
+    cData = CharData.objects.get(pk=1)
+    cData2 = CharData2.objects.get(pk=1)
+    if armorHead.num >= 1:
+        cData2.myArmorHead = armorHead
+        cData2.save()
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
+<<<<<<< HEAD
     return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
 
 """装備変更選択（防具　上）"""
@@ -203,12 +260,26 @@ def armorUpperSelect(request, id):
     if armorUpper.num >= 1:
         user2.armorUpper = armorUpper
         user2.save()
+=======
+    return render(request, 'todo/changeEquipment.html', {'charData': cData,'charData2': cData2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+
+"""装備変更選択（防具　上）"""
+def armorUpperSelect(request, id):
+    from .models import CharData2
+    armorUpper = get_object_or_404(MyArmorUpper,pk=id)
+    cData = CharData.objects.get(pk=1)
+    cData2 = CharData2.objects.get(pk=1)
+    if armorUpper.num >= 1:
+        cData2.myArmorUpper = armorUpper
+        cData2.save()
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
+<<<<<<< HEAD
     return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
 
 """装備変更選択（防具　下）"""
@@ -220,12 +291,26 @@ def armorLowerSelect(request, id):
     if armorLower.num >= 1:
         user2.armorLower = armorLower
         user2.save()
+=======
+    return render(request, 'todo/changeEquipment.html', {'charData': cData,'charData2': cData2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+
+"""装備変更選択（防具　下）"""
+def armorLowerSelect(request, id):
+    from .models import CharData2
+    armorLower = get_object_or_404(MyArmorLower,pk=id)
+    cData = CharData.objects.get(pk=1)
+    cData2 = CharData2.objects.get(pk=1)
+    if armorLower.num >= 1:
+        cData2.myArmorLower = armorLower
+        cData2.save()
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
+<<<<<<< HEAD
     return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
 
 """装備変更完了"""
@@ -237,12 +322,29 @@ def changeComplete(request):
     user.armorUpper = user2.armorUpper
     user.armorLower = user2.armorLower
     user.save()
+=======
+    return render(request, 'todo/changeEquipment.html', {'charData': cData,'charData2': cData2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+
+"""装備変更完了"""
+def changeComplete(request):
+    cData = CharData.objects.get(pk=1)
+    cData2 = CharData2.objects.get(pk=1)
+    cData.myWeapon = cData2.myWeapon
+    cData.myArmorHead = cData2.myArmorHead
+    cData.myArmorUpper = cData2.myArmorUpper
+    cData.myArmorLower = cData2.myArmorLower
+    cData.save()
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
+<<<<<<< HEAD
 #    return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
     return redirect('todo:dispCharData')
 #    return render(request)
 #    return render(request, 'todo/dispCharData.html', {'todo': todo})
+=======
+    return render(request, 'todo/changeEquipment.html', {'charData': cData,'charData2': cData2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
