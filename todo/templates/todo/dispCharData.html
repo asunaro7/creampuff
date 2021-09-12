@@ -61,7 +61,8 @@
 
 
       function openWinChangeEquipment() {
-        myWindow8 = window.open("changeEquipment", "myWindow8", "top=200,left=200,width=600,height=300");
+        myWindow8 = window.open("changeEquipment", "myWindow8", "top=200,left=200,width=1200,height=800");
+        self.close();
       }
       </script>
 
@@ -84,16 +85,16 @@
             {% for charDatas in todo %}
 
               <div class="todo-item">
-                    <font size="5"><b>{{ charDatas.myName }}</b></font><br>
+                    <font size="5"><b>{{ charDatas.brave_name }}</b></font><br>
 
-                    HP:{{charDatas.myHP}}<br>
-                    レベル:<span style="color:red">{{ charDatas.myLevel}}</span><br>
-                    武器：{{charDatas.myWeapon}}<br>
-                    防具　頭：{{charDatas.myArmorHead}}<br>
-                    防具　上：{{charDatas.myArmorUpper}}<br>
-                    防具　下：{{charDatas.myArmorLower}}<br>
-                    防具　アクセサリ：{{charDatas.myArmorAccessory}}<br>
-                    持ち金：{{charDatas.myMoney}}<br>
+                    HP:{{charDatas.hp}}<br>
+                    レベル:<span style="color:red">{{ charDatas.level}}</span><br>
+                    武器：{{charDatas.weapon}}<br>
+                    防具　頭：{{charDatas.armorHead}}<br>
+                    防具　上：{{charDatas.armorUpper}}<br>
+                    防具　下：{{charDatas.armorLower}}<br>
+                    防具　アクセサリ：{{charDatas.armorAccessory}}<br>
+                    持ち金：{{charDatas.money}}<br>
 
                 </div>
 
@@ -101,6 +102,6 @@
         </div>
 
         <div class="todo-btn">
-            <button type="button" class="btn" onclick="openWinChangeEquipment()">装備の変更</button>
+            <button type="button" class="btn" onclick="openWinChangeEquipment()">変更</button>
         </div>
     </div>

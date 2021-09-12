@@ -49,44 +49,23 @@ class Game_monster(models.Model):
         return self.name
 
 """ゲーム:攻撃"""
-class User(models.Model):
+"""class User(models.Model):
     brave_name = '勇者くん'
     attack = 0
 
     def __str__(self):
-        return self.attack
-
-"""キャラクタデータ"""
-class CharData(models.Model):
-    myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
-    myHP = models.IntegerField('HP',blank=True, null=True,default=0)
-    myLevel= models.IntegerField('レベル',blank=True, null=True,default=0)
-    myWeapon = models.CharField('武器',blank=True, null=True,default="", max_length=50)
-    myArmorHead  = models.CharField('防具　頭',blank=True, null=True,default="", max_length=50)
-    myArmorUpper  = models.CharField('防具　上',blank=True, null=True,default="", max_length=50)
-    myArmorLower  = models.CharField('防具　下',blank=True, null=True,default="", max_length=50)
-    myArmorAccessory  = models.CharField('防具　アクセサリ',blank=True, null=True,default="", max_length=50)
-    myMoney = models.IntegerField('持ち金',blank=True, null=True,default=0)
-
-    l_category = (
-      ('1', '易'),
-      ('2', 'やや易'),
-      ('3', '普通'),
-      ('4', 'やや難'),
-      ('5', '難'),
-    )
-
-    def __str__(self):
-        return self.myName
+        return self.attack"""
 
 """所持武器データ"""
 class MyWeapon(models.Model):
     myName = models.CharField('武器名',blank=True, null=True,default="", max_length=50)
 
-    attackPower  = models.IntegerField('攻撃力',blank=True, null=True,default=0)
+#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+
+    attackPower  = models.IntegerField('攻撃力',blank=True, null=True,default=100)
     defensePower  = models.IntegerField('防御力',blank=True, null=True,default=0)
     hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=0)
-    price  = models.IntegerField('購入額',blank=True, null=True,default=0)
+    price  = models.IntegerField('購入額',blank=True, null=True,default=100)
     num  = models.IntegerField('所持数',blank=True, null=True,default=0)
 
     def __str__(self):
@@ -98,9 +77,9 @@ class MyArmorHead(models.Model):
     myName = models.CharField('防具名　頭',blank=True, null=True,default="", max_length=50)
 
     attackPower  = models.IntegerField('攻撃力',blank=True, null=True,default=0)
-    defensePower  = models.IntegerField('防御力',blank=True, null=True,default=0)
-    hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=0)
-    price  = models.IntegerField('購入額',blank=True, null=True,default=0)
+    defensePower  = models.IntegerField('防御力',blank=True, null=True,default=100)
+    hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=10)
+    price  = models.IntegerField('購入額',blank=True, null=True,default=100)
     num  = models.IntegerField('所持数',blank=True, null=True,default=0)
 
     def __str__(self):
@@ -131,3 +110,37 @@ class MyArmorLower(models.Model):
 
     def __str__(self):
         return self.myName
+
+"""ゲーム:攻撃"""
+class User(models.Model):
+    attack= models.IntegerField('attack',blank=True, null=True,default=0)
+    brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
+
+#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+    weapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="木刀")
+    armorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="布の帽子")
+    armorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="衣上")
+    armorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="衣下")
+    hp = models.IntegerField('HP',blank=True, null=True,default=100)
+    level= models.IntegerField('レベル',blank=True, null=True,default=1)
+    money = models.IntegerField('持ち金',blank=True, null=True,default=1000)
+
+    def __str__(self):
+        return self.brave_name
+
+"""ゲーム:攻撃"""
+class User2(models.Model):
+    attack= models.IntegerField('attack',blank=True, null=True,default=0)
+    brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
+
+#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+    weapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="木刀")
+    armorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="布の帽子")
+    armorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="衣上")
+    armorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="衣下")
+    hp = models.IntegerField('HP',blank=True, null=True,default=100)
+    level= models.IntegerField('レベル',blank=True, null=True,default=1)
+    money = models.IntegerField('持ち金',blank=True, null=True,default=1000)
+
+    def __str__(self):
+        return self.brave_name
