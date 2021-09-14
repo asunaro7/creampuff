@@ -1,0 +1,300 @@
+<!-- /todo/templates/todo/index.html -->
+{% load static %}
+<head>
+  <title>RPGタスク</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    html * {
+      box-sizing: border-box;       /*内部要素すべてに摘要*/
+    }
+    body {
+/*      background-image: url(/media/images/Old-map3.jpg);*/       /*内部要素すべてに摘要*/
+      background-repeat: no-repeat;       /*内部要素すべてに摘要*/
+    }
+
+    h2 {
+      color: blue;
+      margin-left: 20px;
+/*      border-bottom: 1px dotted #3f5170;*/
+    }
+    .todo-gameblock{
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+      width: 100vw;
+      height: 100px;
+      background-color: #c0c0c0;
+    }
+    .todo-video{
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+      width: 100vw;
+      height: 100px;
+      background-color: #c0c0c0;
+    }
+    .todo-tasktitleblock{
+      display: flex;                /*内部要素の横並び*/
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+    }
+    .todo-tasktitle{
+      width: 50vw;
+      margin: 20px 20px 0 0;     /*上、右、下、左*/
+    }
+    .todo-todaymessageblock{
+      text-align: right;
+      width: 50vw;
+      margin: 20px 20px 0 0;     /*上、右、下、左*/
+    }
+    .todo-taskblock{
+      display: flex;                /*内部要素の横並び*/
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+/*      background-image: url(/media/images/Old-map3.jpg);*/       /*内部要素すべてに摘要*/
+/*      background-repeat: no-repeat;*/       /*内部要素すべてに摘要*/
+    }
+    .todo-allitem{
+      text-align: left;
+      border: 1px solid #3f5170;
+      width: 50vw;
+      margin-right: 20px;
+/*      background-image: url(desk.jpg);*/
+    }
+    .todo-item{
+      text-align: left;
+      border-bottom: 1px solid #3f5170;
+<<<<<<< HEAD
+      margin: 10px 10px 0 10px;
+      background-color: #99ffcc;
+    }
+=======
+<<<<<<< HEAD
+=======
+      margin: 10px 10px 0 10px;
+      background-color: #99ffcc;
+    }
+    .todo-item:hover{
+      text-align: left;
+      border-bottom: 1px solid #3f5170;
+>>>>>>> origin/master
+      margin: 10px 10px 0 10px;
+      background-color: #99ffcc;
+    }
+<<<<<<< HEAD
+>>>>>>> origin/master
+    .todo-item:hover{
+      text-align: left;
+      border-bottom: 1px solid #3f5170;
+      margin: 10px 10px 0 10px;
+    }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
+    .todo-rightblock{
+      display: flex;                /*内部要素の横並び*/
+      text-align: left;
+      border: 1px solid #3f5170;
+      width: 50vw;
+      height: auto;
+      margin-left: 20px;
+    }
+    .todo-buttonblock{
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+      width: 15vw;
+#      height: 20px;
+#      background-color: #c0c0c0;
+    }
+    .todo-messageblock{
+      margin: 30px 20px 0 20px;     /*上、右、下、左*/
+      width: 25vw;
+      height: 20px;
+      background-color: #c0c0c0;
+    }
+    .todo-messageblock:hover{
+      margin: 30px 20px 0 20px;     /*上、右、下、左*/
+      width: 25vw;
+      height: 20px;
+      background-color: #c0c0c0;
+
+      transform: rotate3d(1,0,0,360deg);  /* 回転 */
+      transition: 2s;             /* 1秒かけて動く */
+    }
+
+  </style>
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+  function openWinTask() {
+    myWindow = window.open("{% url 'todo:new' %}",'_blank');
+  }
+  function openWinBuyWeapon2() {
+    myWindow6 = window.open("buyWeapon2", "myWindow6", "top=200,left=200,width=600,height=450");
+  }
+  function openWinDispCharData() {
+    myWindow7 = window.open("dispCharData", "myWindow7", "top=200,left=200,width=600,height=450");
+  }
+>>>>>>> 2aa2e0eac509e3e97bf80cbb49944d92c5078c34
+>>>>>>> origin/master
+>>>>>>> origin/master
+
+</head>
+
+
+<body>
+<!--<body onload="LoadProc();">-->
+<<<<<<< HEAD
+
+    <h2>ゲーム画面</h2>
+
+=======
+
+    <h2>ゲーム画面</h2>
+
+>>>>>>> origin/master
+    <div class="todo-gameblock">
+     <form method="POST" action="{% url 'todo:start' %}">
+         {% csrf_token %}
+         <button type="submit"><span style="color:red">ゲーム開始</span></button>
+     </form>
+     {% block contents %}
+       現在の攻撃力チャージ数:{{ user.attack }}<br>
+       {{ user.brave_name }} は {{ monster.name }} に 攻撃した <br>
+       {{ monster.name }} の HP は {{ monster.hp }} になった
+     {% endblock %}
+    </div>
+
+    <div class="todo-videoblock">
+        <video class="todo-video" poster="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/img/movie.jpg" webkit-playsinline playsinline muted autoplay loop>
+            <source src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/video/movie.mp4" type="video/mp4">
+            <source src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/video/movie.ogv" type="video/ogv">
+            <source src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/video/movie.webm" type="video/webm">
+            <p>動画を再生できる環境ではありません。</p>
+        </video>
+    </div>
+
+</body>
+
+<!----------------------------------------<br>-->
+
+  <div class="todo-tasktitleblock">
+      <h2 class="todo-tasktitle">タスク</h2>
+      <div class="todo-todaymessageblock">
+          <p id="message">こんにちは！</p><br>
+      </div>
+  </div>
+
+    {% if delete %}
+    <p>delete</p>
+    {% endif %}
+
+    <div class="todo-taskblock">
+        <div class="todo-allitem">
+
+    {% for todos in todo %}
+        <div class="todo-item">
+
+        <!--  ****************************************<br>-->
+            <a href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a><br>
+                 カテゴリー:{{　todos.category　}}<br>
+                 締切日:<span style="color:red" name="deadline_date">{{ todos.deadline_date　}}</span><br>
+                 難易度：{{　todos.level　}}<br>
+            <form method="POST" action="{% url 'todo:delete' todos.pk %}">
+                {% csrf_token %}
+                <input type="submit"
+                  value="削除"
+                  onclick="return confirm('本当に削除しますか？');"
+                >
+            </form>
+            <form method="POST" action="{% url 'todo:encount' todos.pk %}">
+                {% csrf_token %}
+                <button type="submit" name="completeBtn"><span style="color:red">完了</span></button>
+            </form>
+        <!--  ****************************************<br> -->
+         </div>
+
+    {% endfor %}
+  </div>
+
+  <div class="todo-rightblock">
+    <div class="todo-buttonblock">
+        <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
+        <button type="button" class="btn" onclick="openWinBuyEquipment()">装備を購入</button>
+        <button type="button" class="btn" onclick="openWinDispCharData()">ゲーム</button>
+    </div>
+    <div class="todo-messageblock">
+        <p id="message2">こんにちは！</p><br>
+    </div>
+  </div>
+</div>
+
+
+<script>
+var myWindow,myWindow2,myWindow3//,myWindow5,myWindow6,myWindow7;
+
+function openWinTask() {
+  myWindow = window.open("{% url 'todo:new' %}",'_blank');
+}
+function openWinBuyEquipment() {
+  myWindow2 = window.open("buyWeapon2", "myWindow6", "top=200,left=200,width=600,height=450");
+}
+function openWinDispCharData() {
+
+  myWindow3 = window.open("dispCharData", "myWindow7", "top=200,left=200,width=600,height=450");
+}
+
+/*上段メッセージ*/
+var now = new Date();
+var elm = document.getElementById('message');                                   /*１箇所*/
+var elm2 = document.getElementById('message2');                                 /*１箇所*/
+var hour = now.getHours();
+elm.style.background = '#ffcccc';
+
+if (hour < 2){
+  elm.textContent = '健康も大事です、もうそろそろお休みになってはいかがでしょうか';
+} else if(hour > 22){
+  elm.textContent = '遅くまでがんばっているね、お疲れ様です。';
+} else if(hour < 12){
+  elm.textContent = '今日も一日頑張ろう！';
+} else{
+  elm.textContent = 'こんちくしょう！';
+}
+/****************/
+/*下段メッセージ*/
+var btnElements = document.getElementsByName("completeBtn");                          /*数箇所*/
+var storage = localStorage;
+
+var fn = function(){
+    elm2.textContent = 'やればできる！君ならできる！';
+    storage.msgFlg = 0;
+};
+
+for (let i = 0; i < btnElements.length; i++) {
+    btnElements[i].addEventListener('click', function() {
+        storage.msgFlg = 1;
+    }, false);
+}
+
+if (storage.msgFlg == 1){
+        elm2.textContent = 'やったね！';
+        setTimeout(fn, 3000);
+}
+/****************/
+/*時刻比較途中*/
+var dateElements = document.getElementsByName("deadline_date");                          /*数箇所*/
+var itemElements = document.getElementsByClassName("todo-item");                          /*数箇所*/
+var hour = now.getHours();
+console.log(123);
+console.log(dateElements[0]+":"+now);
+for (let i = 0; i < dateElements.length; i++) {
+    console.log(dateElements[i]+":"+now);
+    if (dateElements[i] < now){
+      console.log(dateElements[i]+":"+now);
+    }
+}
+/****************/
+
+</script>

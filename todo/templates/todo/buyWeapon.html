@@ -1,0 +1,117 @@
+<!-- /todo/templates/todo/index.html -->
+{% load static %}
+<head>
+  <title>RPGタスク</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+  <style>
+    html * {
+      box-sizing: border-box;       /*内部要素すべてに摘要*/
+    }
+
+    h2 {
+      color: blue;
+      margin-left: 20px;
+      border-bottom: 1px dotted #3f5170;
+    }
+    .todo-gameblock{
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+      width: 100vw;
+      height: 50px;
+      background-color: #c0c0c0;
+#        background-image: url(10626614i.png);
+#        background-repeat: repeat-x;
+    }
+    /* 画面幅の100%の幅で画像を表示 */
+    .image-vw {
+      width : 100vw ;
+    }
+    .todo-taskblock{
+      display: flex;                /*内部要素の横並び*/
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+    }
+    .todo-allitem{
+      text-align: left;
+      border: 1px solid #3f5170;
+      width: 50vw;
+      margin-right: 20px;
+    }
+    .todo-item{
+      text-align: left;
+      border-bottom: 1px dotted #3f5170;
+      margin: 10px 10px 0 10px;
+    }
+    .todo-btn{
+      text-align: left;
+      border: 1px solid #3f5170;
+      width: 50vw;
+      height: auto;
+      margin-left: 20px;
+    }
+  </style>
+
+
+  <script>
+
+  var myWindow;
+
+
+  function buyWeaponWin() {
+    myWindow = window.open("", "myWindow", "top=200,left=200,width=600,height=300");
+    myWindow.document.write("<p>武器購入</p>");
+    myWindow.document.write("<p>　持ち金 1000$</p>");
+    myWindow.document.write("<p>　武器１  攻撃力  1000  回復力  100　　1000$</p>");
+    myWindow.document.write("<p>　武器２  攻撃力  2000  回復力  200　　2000$</p>");
+    myWindow.document.write("<p>　武器３  攻撃力  3000  回復力  300　　3000$</p>");
+  }
+  </script>
+
+
+</head>
+   <h2>武器購入</h2>
+
+   {% block contents %}
+   {% endblock %}
+   <div class="todo-gameblock">
+   </div>
+<!-- ----------------------------------------<br>   -->
+
+
+    <h2>購入武器一覧</h2>
+    {{ weapons.myName }}
+    {{ weapons.myName }}
+    {{ buki1 }}<br>
+    {{ buki2 }}<br>
+    {{ buki3 }}<br>
+
+
+    <div class="todo-taskblock">
+        <div class="todo-allitem">
+          {{ weapons.myName }}
+          {{ weapon2s.myName }}
+          {{ buki1 }}<br>
+          {{ buki2 }}<br>
+          {{ buki3 }}<br>
+            {% for weapons in weapon %}
+
+              <div class="todo-item">
+<!--                  ****************************************<br>   -->
+
+
+                    <font size="5"><b>{{ weapons.myName }}</b></font><br>
+                         攻撃力:{{weapons.attackPower}}<br>
+                         価格:<span style="color:red">{{ weapons.price}}</span><br>
+                         所持数：{{weapons.num}}<br>
+<!--                  ****************************************<br>   -->
+                </div>
+
+            {% endfor %}
+        </div>
+
+        <div class="todo-btn">
+            <button type="button" class="btn" onclick="buyWeaponWin()">購入</button>
+        </div>
+    </div>
