@@ -11,7 +11,6 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-
 """タスク内容"""
 class Todo(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
@@ -40,28 +39,49 @@ class Todo(models.Model):
     def __str__(self):
         return self.title
 
+"""タスクカウント"""
+class task_counter(models.Model):
+    counter = 0
+
+    def __str__(self):
+        return self.counter
+
 """ゲーム:モンスター"""
 class Game_monster(models.Model):
-    name = models.CharField('名前', max_length=10)
-    hp = models.PositiveIntegerField('HP')
+    monster = [
+      ['モンスターA', 100000],
+      ['モンスターB', 1000000],
+      ['モンスターC', 10000000],
+      ['モンスターD', 100000000]
+    ]
+    monster_attack = 0
+
+"""キャラクタデータ"""
+class CharData(models.Model):
+    myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
+    myHP = models.IntegerField('HP',blank=True, null=True,default=0)
+    myLevel= models.IntegerField('レベル',blank=True, null=True,default=0)
+    myWeapon = models.CharField('武器',blank=True, null=True,default="", max_length=50)
+    myArmorHead  = models.CharField('防具　頭',blank=True, null=True,default="", max_length=50)
+    myArmorUpper  = models.CharField('防具　上',blank=True, null=True,default="", max_length=50)
+    myArmorLower  = models.CharField('防具　下',blank=True, null=True,default="", max_length=50)
+    myArmorAccessory  = models.CharField('防具　アクセサリ',blank=True, null=True,default="", max_length=50)
+    myMoney = models.IntegerField('持ち金',blank=True, null=True,default=0)
+
+    l_category = (
+      ('1', '易'),
+      ('2', 'やや易'),
+      ('3', '普通'),
+      ('4', 'やや難'),
+      ('5', '難'),
+    )
 
     def __str__(self):
-        return self.name
-
-"""ゲーム:攻撃"""
-"""class User(models.Model):
-    brave_name = '勇者くん'
-    attack = 0
-
-    def __str__(self):
-        return self.attack"""
+        return self.myName
 
 """所持武器データ"""
 class MyWeapon(models.Model):
     myName = models.CharField('武器名',blank=True, null=True,default="", max_length=50)
-
-#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
-
     attackPower  = models.IntegerField('攻撃力',blank=True, null=True,default=100)
     defensePower  = models.IntegerField('防御力',blank=True, null=True,default=0)
     hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=0)
@@ -112,16 +132,24 @@ class MyArmorLower(models.Model):
         return self.myName
 
 """ゲーム:攻撃"""
-class User(models.Model):
-    attack= models.IntegerField('attack',blank=True, null=True,default=0)
-    brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
+"""class User(models.Model):
+    brave_name = '勇者くん'
+    attack = 0
 
-#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
+    def __str__(self):
+        return self.attack"""
+
+"""ゲーム:攻撃"""
+class User(models.Model):
+    brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
+    hp = models.IntegerField('HP',blank=True, null=True,default=100)
+    attack = 0
+    attack_sum = 0
+
     weapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="木刀")
     armorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="布の帽子")
     armorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="衣上")
     armorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="衣下")
-    hp = models.IntegerField('HP',blank=True, null=True,default=100)
     level= models.IntegerField('レベル',blank=True, null=True,default=1)
     money = models.IntegerField('持ち金',blank=True, null=True,default=1000)
 
@@ -130,15 +158,15 @@ class User(models.Model):
 
 """ゲーム:攻撃"""
 class User2(models.Model):
-    attack= models.IntegerField('attack',blank=True, null=True,default=0)
     brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
+    hp = models.IntegerField('HP',blank=True, null=True,default=100)
+    attack = 0
+    attack_sum = 0
 
-#    myTopimage = models.ImageField(upload_to='images',verbose_name='トップ画像')
     weapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="木刀")
     armorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="布の帽子")
     armorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="衣上")
     armorLower  = models.ForeignKey(MyArmorLower,verbose_name = '防具　下', on_delete = models.PROTECT,default="衣下")
-    hp = models.IntegerField('HP',blank=True, null=True,default=100)
     level= models.IntegerField('レベル',blank=True, null=True,default=1)
     money = models.IntegerField('持ち金',blank=True, null=True,default=1000)
 

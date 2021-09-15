@@ -116,9 +116,9 @@
          <button type="submit"><span style="color:red">ゲーム開始</span></button>
      </form>
      {% block contents %}
-       現在の攻撃力チャージ数:{{ user.attack }}<br>
-       {{ user.brave_name }} は {{ monster.name }} に 攻撃した <br>
-       {{ monster.name }} の HP は {{ monster.hp }} になった
+       現在の攻撃力チャージ数:{{ user.attack }}　/　現在までの総タスク完了数:{{ task.counter }}　/　現在までの総攻撃数:{{ user.attack_sum }}<br>
+       {{ user.brave_name }} は {{ monster_name }} に 攻撃した <br>
+       {{ monster_name }} の HP は {{ monster_hp }} になった
      {% endblock %}
     </div>
 
@@ -154,15 +154,20 @@
 
         <!--  ****************************************<br>-->
             <a href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a><br>
-                 カテゴリー:{{　todos.category　}}<br>
-                 締切日:<span style="color:red" name="deadline_date">{{ todos.deadline_date　}}</span><br>
-                 難易度：{{　todos.level　}}<br>
-            <form method="POST" action="{% url 'todo:delete' todos.pk %}">
-                {% csrf_token %}
-                <input type="submit"
-                  value="削除"
-                  onclick="return confirm('本当に削除しますか？');"
-                >
+            カテゴリー:{{　todos.category　}}<br>
+            {% if todos.deadline_date < now %}
+               締切日:<span style="color:red">{{ todos.deadline_date　}}</span> <b>締め切りをすぎています！</b><br>
+            {% else %}
+               締切日:<span style="color:blue">{{ todos.deadline_date　}}</span><br>
+            {% endif %}
+            難易度：{{　todos.level　}}<br>
+       <form method="POST" action="{% url 'todo:delete' todos.pk %}">
+           {% csrf_token %}
+           <form method="get" action="{% url 'todo:delete' todos.pk %}">
+               <input type="submit"
+                 value="削除"
+                 onclick="return confirm('本当に削除しますか？');"
+               >
             </form>
             <form method="POST" action="{% url 'todo:encount' todos.pk %}">
                 {% csrf_token %}
