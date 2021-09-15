@@ -1,20 +1,31 @@
 # /todo/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Todo, Category, Game_monster, User, User2, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower
+from .models import Todo, Category, Game_monster, User, User2, MyWeapon, CharData, MyArmorHead, MyArmorUpper, MyArmorLower, task_counter
 from .forms import TodoForm
+from .forms_category import CategoryForm
 from django.utils import timezone
 
 
 """一覧表示"""
 def index(request):
-    todo = Todo.objects.order_by('title')
-    monster = Game_monster.objects.first()
+    todo = Todo.objects.order_by('deadline_date')
+    now = timezone.now
+    monster_name = Game_monster.monster[0][0]
+    monster_hp = Game_monster.monster[0][1]
+    monster_attack = Game_monster.monster_attack
     user = User.objects.first()
-
     user2 = User2.objects.first()
-    return render(request, 'todo/index.html', {'todo': todo, 'user':user, 'monster':monster, 'user2':user2})
-#    return render(request, 'todo/index.html', {'todo': todo, 'user':User, 'monster':monster})
+    return render(request, 'todo/index.html',
+                  {'todo': todo,
+                   'now':now,
+                   'user':user,
+                   'user2':User2,
+                   'monster_name':monster_name,
+                   'monster_hp':monster_hp,
+                   'monster_attack':monster_attack,
+                   'task':task_counter,
+                  })
 
 """削除機能"""#タスクを削除する場合
 def delete(request, id):
@@ -62,6 +73,23 @@ def edit(request, pk):
     return render(request, 'todo/edit.html', {
     'form': form})
 
+"""カテゴリー表示"""
+def detail_c(request, pk):
+    categorys = get_object_or_404(Category, pk=pk)
+    return render(request, 'todo/detail_c.html', {'categorys': categorys})
+
+"""カテゴリーフォーム"""
+def new_c(request):
+    if request.method == "POST":
+        form_c = CategoryForm(request.POST)
+        if form_c.is_valid():
+            category = form_c.save(commit=False)
+            category.save()
+            return redirect('todo:detail_c', pk=category.pk)
+    else:
+        form_c = CategoryForm()
+    return render(request, 'todo/new_c.html',{'forms':form_c})
+
 """ゲーム"""
 """完了ボタン"""
 def encount(request, id):
@@ -69,26 +97,24 @@ def encount(request, id):
     field_name = 'level'
     field_value = getattr(todo, field_name)
     user = User.objects.first()
-    user.attack += int(field_value) * user.weapon.attackPower
+    User.attack += int(field_value) * user.weapon.attackPower
+    User.attack_sum += User.attack
+    task_counter.counter += 1
     user.save()
     todo.delete()
     return redirect('todo:index')
 
 """開始ボタン"""
 def start(request):
-    monster = Game_monster.objects.first()
-    user = User.objects.first()
-    if monster.hp < 0 :
-        monster.delete()
-        monster = Game_monster.objects.first()
-    monster.hp -= user.attack
-    monster.save()
-    user.attack = 0
+    monster_name = Game_monster.monster[0][0]
+    monster_hp = Game_monster.monster[0][1]
+    monster_hp -= User.attack
+    Game_monster.monster[0][1] = monster_hp
+    User.attack = 0
     return redirect('todo:index')
 
 """武器購入画面表示"""
 def buyEquipment(request):
-#    todo = Todo.objects.order_by('title')
     weapon = MyWeapon.objects.order_by('myName')
     user = User.objects.first()
     return render(request, 'todo/buyEquipment.html', {'user': user,'weapon': weapon})
@@ -109,19 +135,6 @@ def buyWeapon(request, id):
     user.save()
     weapon.save()
 
-
-
-#    user2 = User2.objects.first()
-#    if weapon.num >= 1:
-#        user2.weapon = weapon
-#        user2.save()
-
-#    wpn = MyWeapon.objects.order_by('myName')
-#    amrH = MyArmorHead.objects.order_by('myName')
-#    amrU = MyArmorUpper.objects.order_by('myName')
-#    amrL = MyArmorLower.objects.order_by('myName')
-
-#    return render(request, 'todo/buyWeapon.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
     return redirect('todo:buyEquipment')
 
 """キャラクタ表示"""
@@ -131,10 +144,7 @@ def dispCharData(request):
 
 """装備変更表示"""
 def changeEquipment(request):
-#    user = User.objects.order_by('brave_name')
-#    user2 = User2.objects.order_by('brave_name')
     user11 = User.objects.first()
-#    user11 = User.objects.get(pk=1)
     print(User.objects.count())
     if User2.objects.count() >= 1:
         user12 = User2.objects.first()
@@ -175,7 +185,6 @@ def weaponSelect(request, id):
     amrL = MyArmorLower.objects.order_by('myName')
 
     return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
-#    return redirect('todo:changeEquipment')
 
 """装備変更選択（防具　頭）"""
 def armorHeadSelect(request, id):
@@ -242,7 +251,4 @@ def changeComplete(request):
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
-#    return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
     return redirect('todo:dispCharData')
-#    return render(request)
-#    return render(request, 'todo/dispCharData.html', {'todo': todo})

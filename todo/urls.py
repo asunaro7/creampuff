@@ -26,4 +26,6 @@ urlpatterns = [
         path('<int:id>/armorUpperSelect/', views.armorUpperSelect, name='armorUpperSelect'),    # ←追加
         path('<int:id>/armorLowerSelect/', views.armorLowerSelect, name='armorLowerSelect'),    # ←追加
         path('changeComplete', views.changeComplete, name='changeComplete'),    # ←追加
+        path('category/form/', views.new_c, name='new_c'), # ←　カテゴリー追加
+        path('category/form/<int:pk>/', views.detail_c, name='detail_c'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #追加
