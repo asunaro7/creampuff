@@ -8,4 +8,5 @@ from django.conf import settings #追加
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('todo.urls')),  # ←追記
+    # path('accounts/', include('accounts.urls')), #←ログイン用アプリ
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #追加

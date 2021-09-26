@@ -39,23 +39,6 @@ class Todo(models.Model):
     def __str__(self):
         return self.title
 
-"""タスクカウント"""
-class task_counter(models.Model):
-    counter = 0
-
-    def __str__(self):
-        return self.counter
-
-"""ゲーム:モンスター"""
-class Game_monster(models.Model):
-    monster = [
-      ['モンスターA', 100000],
-      ['モンスターB', 1000000],
-      ['モンスターC', 10000000],
-      ['モンスターD', 100000000]
-    ]
-    monster_attack = 0
-
 """キャラクタデータ"""
 class CharData(models.Model):
     myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
@@ -95,7 +78,6 @@ class MyWeapon(models.Model):
 """所持防具データ"""
 class MyArmorHead(models.Model):
     myName = models.CharField('防具名　頭',blank=True, null=True,default="", max_length=50)
-
     attackPower  = models.IntegerField('攻撃力',blank=True, null=True,default=0)
     defensePower  = models.IntegerField('防御力',blank=True, null=True,default=100)
     hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=10)
@@ -108,7 +90,6 @@ class MyArmorHead(models.Model):
 """所持防具データ"""
 class MyArmorUpper(models.Model):
     myName = models.CharField('防具名　上',blank=True, null=True,default="", max_length=50)
-
     attackPower  = models.IntegerField('攻撃力',blank=True, null=True,default=0)
     defensePower  = models.IntegerField('防御力',blank=True, null=True,default=0)
     hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=0)
@@ -121,7 +102,6 @@ class MyArmorUpper(models.Model):
 """所持防具データ"""
 class MyArmorLower(models.Model):
     myName = models.CharField('防具名　下',blank=True, null=True,default="", max_length=50)
-
     attackPower  = models.IntegerField('攻撃力',blank=True, null=True,default=0)
     defensePower  = models.IntegerField('防御力',blank=True, null=True,default=0)
     hpRecoveryPower  = models.IntegerField('HP回復力',blank=True, null=True,default=0)
@@ -132,19 +112,9 @@ class MyArmorLower(models.Model):
         return self.myName
 
 """ゲーム:攻撃"""
-"""class User(models.Model):
-    brave_name = '勇者くん'
-    attack = 0
-
-    def __str__(self):
-        return self.attack"""
-
-"""ゲーム:攻撃"""
 class User(models.Model):
     brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
     hp = models.IntegerField('HP',blank=True, null=True,default=100)
-    attack = 0
-    attack_sum = 0
 
     weapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="木刀")
     armorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="布の帽子")
@@ -160,8 +130,6 @@ class User(models.Model):
 class User2(models.Model):
     brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
     hp = models.IntegerField('HP',blank=True, null=True,default=100)
-    attack = 0
-    attack_sum = 0
 
     weapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="木刀")
     armorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="布の帽子")
