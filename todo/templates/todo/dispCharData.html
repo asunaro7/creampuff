@@ -1,5 +1,5 @@
 
-    <!-- /todo/templates/todo/index.html -->
+    <!-- /todo/templates/todo/ -->
     {% load static %}
     <head>
       <title>RPGタスク</title>
@@ -70,35 +70,24 @@
 
 
 </head>
-   <h2>ゲーム画面</h2>
-
-   {% block contents %}
-   {% endblock %}
-   <div class="todo-gameblock">
-   </div>
-
 
     <h2>キャラクタ</h2>
 
     <div class="todo-taskblock">
         <div class="todo-allitem">
-            {% for charDatas in todo %}
-
               <div class="todo-item">
-                    <font size="5"><b>{{ charDatas.brave_name }}</b></font><br>
+                    <font size="5"><b>{{ name }}</b></font><br>
 
-                    HP:{{charDatas.hp}}<br>
-                    レベル:<span style="color:red">{{ charDatas.level}}</span><br>
-                    武器：{{charDatas.weapon}}<br>
-                    防具　頭：{{charDatas.armorHead}}<br>
-                    防具　上：{{charDatas.armorUpper}}<br>
-                    防具　下：{{charDatas.armorLower}}<br>
-                    防具　アクセサリ：{{charDatas.armorAccessory}}<br>
-                    持ち金：{{charDatas.money}}<br>
+                    HP:{{ hp }}<br>
+                    レベル:<span style="color:red">{{ level}}</span><br>
+                    武器：{{ weapon }}<br>
+                    防具　頭：{{ armorHead }}<br>
+                    防具　上：{{ armorUpper }}<br>
+                    防具　下：{{ armorLower }}<br>
+
+                    持ち金：{{ money}}<br>
 
                 </div>
-
-            {% endfor %}
         </div>
 
         <div class="todo-btn">

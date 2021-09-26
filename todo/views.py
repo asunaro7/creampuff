@@ -1,31 +1,26 @@
 # /todo/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Todo, Category, Game_monster, User, User2, MyWeapon, CharData, MyArmorHead, MyArmorUpper, MyArmorLower, task_counter
+from .models import Todo, Category, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower, User, User2
+from .models_game import Game, Player
 from .forms import TodoForm
 from .forms_category import CategoryForm
 from django.utils import timezone
+
 
 
 """一覧表示"""
 def index(request):
     todo = Todo.objects.order_by('deadline_date')
     now = timezone.now
-    monster_name = Game_monster.monster[0][0]
-    monster_hp = Game_monster.monster[0][1]
-    monster_attack = Game_monster.monster_attack
-    user = User.objects.first()
-    user2 = User2.objects.first()
-    return render(request, 'todo/index.html',
-                  {'todo': todo,
-                   'now':now,
-                   'user':user,
-                   'user2':User2,
-                   'monster_name':monster_name,
-                   'monster_hp':monster_hp,
-                   'monster_attack':monster_attack,
-                   'task':task_counter,
-                  })
+
+    content = {
+        'todo': todo,
+         'now':now,
+         'Game':Game,
+         'Player':Player,
+    }
+    return render(request, 'todo/index.html', content)
 
 """削除機能"""#タスクを削除する場合
 def delete(request, id):
@@ -96,22 +91,37 @@ def encount(request, id):
     todo = get_object_or_404(Todo,pk=id)
     field_name = 'level'
     field_value = getattr(todo, field_name)
-    user = User.objects.first()
-    User.attack += int(field_value) * user.weapon.attackPower
-    User.attack_sum += User.attack
-    task_counter.counter += 1
-    user.save()
+    Game.task_counter += 1
+
+    if todo.deadline_date > timezone.now():
+        Game.attack_name = Player.name
+        Game.damage_name = Game.monster[0][0]
+        Game.damage_a_hp = Game.monster[0][1]
+
+        Game.attack_power = int(field_value) * 100
+        Player.attack_sum += Game.attack_power
+        Player.attack = Game.attack_power
+
+        Game.damage_a_hp -= Game.attack_power
+        Game.monster[0][1] = Game.damage_a_hp
+
+    else:
+        Game.attack_name = Game.monster[0][0]
+        Game.damage_name = Player.name
+        Game.damage_a_hp = Player.hp
+
+        Game.attack_power = Game.monster[0][2]
+
+        Game.damage_a_hp -= Game.attack_power
+        Player.hp = Game.damage_a_hp
+
+        Player.attack = 0
+
+
     todo.delete()
+
     return redirect('todo:index')
 
-"""開始ボタン"""
-def start(request):
-    monster_name = Game_monster.monster[0][0]
-    monster_hp = Game_monster.monster[0][1]
-    monster_hp -= User.attack
-    Game_monster.monster[0][1] = monster_hp
-    User.attack = 0
-    return redirect('todo:index')
 
 """武器購入画面表示"""
 def buyEquipment(request):
@@ -126,7 +136,6 @@ def buyWeapon2(request):
 
 """装備購入（武器）"""
 def buyWeapon(request, id):
-    from .models import User2
     weapon = get_object_or_404(MyWeapon,pk=id)
     user = User.objects.first()
 
@@ -139,8 +148,27 @@ def buyWeapon(request, id):
 
 """キャラクタ表示"""
 def dispCharData(request):
-    todo = User.objects.order_by('brave_name')
-    return render(request, 'todo/dispCharData.html', {'todo': todo})
+    name = Player.name
+    hp = Player.hp
+    money = Player.money
+    level = Player.level
+
+    weapon = Player.Weapon[0]
+    armorHead = Player.ArmorHead[0]
+    armorUpper = Player.ArmorUpper[0]
+    armorLower = Player.ArmorLower[0]
+
+    txt = {
+       'name':name,
+       'hp':hp,
+       'money':money,
+       'level':level,
+       'weapon':weapon,
+       'armorHead':armorHead,
+       'armorUpper':armorUpper,
+       'armorLower':armorLower,
+    }
+    return render(request, 'todo/dispCharData.html', txt)
 
 """装備変更表示"""
 def changeEquipment(request):
@@ -167,11 +195,59 @@ def changeEquipment(request):
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
-    return render(request, 'todo/changeEquipment.html', {'user': user11,'user2': user12, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+
+    name = Player.name
+    hp = Player.hp
+    money = Player.money
+    level = Player.level
+
+    weapon = Player.Weapon[0]
+    armorHead = Player.ArmorHead[0]
+    armorUpper = Player.ArmorUpper[0]
+    armorLower = Player.ArmorLower[0]
+
+    txt2 = {
+    'user': user11,
+    'user2': user12,
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL,
+    'name':name,
+    'hp':hp,
+    'money':money,
+    'level':level,
+    'weapon':weapon,
+    'armorHead':armorHead,
+    'armorUpper':armorUpper,
+    'armorLower':armorLower,
+    }
+    #
+    # name = Player.name
+    # hp = Player.hp
+    # money = Player.money
+    # level = Player.level
+    #
+    # weapon = Player.Weapon[0]
+    # armorHead = Player.ArmorHead[0]
+    # armorUpper = Player.ArmorUpper[0]
+    # armorLower = Player.ArmorLower[0]
+    #
+    # txt1 ={
+    #     'name':name,
+    #     'hp':hp,
+    #     'money':money,
+    #     'level':level,
+    #     'weapon':weapon,
+    #     'armorHead':armorHead,
+    #     'armorUpper':armorUpper,
+    #     'armorLower':armorLower,
+    # }
+
+    return render(request, 'todo/changeEquipment.html', txt2)
 
 """装備変更選択（武器）"""
 def weaponSelect(request, id):
-    from .models import User2
     weapon = get_object_or_404(MyWeapon,pk=id)
     user = User.objects.first()
     user2 = User2.objects.first()
@@ -188,7 +264,6 @@ def weaponSelect(request, id):
 
 """装備変更選択（防具　頭）"""
 def armorHeadSelect(request, id):
-    from .models import User2
     armorHead = get_object_or_404(MyArmorHead,pk=id)
     user = User.objects.first()
     user2 = User2.objects.first()
@@ -205,7 +280,6 @@ def armorHeadSelect(request, id):
 
 """装備変更選択（防具　上）"""
 def armorUpperSelect(request, id):
-    from .models import User2
     armorUpper = get_object_or_404(MyArmorUpper,pk=id)
     user = User.objects.first()
     user2 = User2.objects.first()
@@ -222,7 +296,6 @@ def armorUpperSelect(request, id):
 
 """装備変更選択（防具　下）"""
 def armorLowerSelect(request, id):
-    from .models import User2
     armorLower = get_object_or_404(MyArmorLower,pk=id)
     user = User.objects.first()
     user2 = User2.objects.first()

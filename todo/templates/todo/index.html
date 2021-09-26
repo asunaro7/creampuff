@@ -111,14 +111,15 @@
     <h2>ゲーム画面</h2>
 
     <div class="todo-gameblock">
-     <form method="POST" action="{% url 'todo:start' %}">
-         {% csrf_token %}
-         <button type="submit"><span style="color:red">ゲーム開始</span></button>
-     </form>
+
      {% block contents %}
-       現在の攻撃力チャージ数:{{ user.attack }}　/　現在までの総タスク完了数:{{ task.counter }}　/　現在までの総攻撃数:{{ user.attack_sum }}<br>
-       {{ user.brave_name }} は {{ monster_name }} に 攻撃した <br>
-       {{ monster_name }} の HP は {{ monster_hp }} になった
+     現在の攻撃:{{ Player.attack }}　/　現在までの総タスク完了数:{{ Game.task_counter }}　/　現在までの総攻撃数:{{ Player.attack_sum }}<br>
+     {% if Game.task_counter > 0 %}
+      {{ Game.attack_name }} は {{ Game.damage_name }} に {{ Game.attack_power }} 攻撃した <br>
+      {{ Game.damage_name }} の HP は {{ Game.damage_a_hp }} になった
+     {% else %}
+       タスクを完了しよう！！
+     {% endif %}
      {% endblock %}
     </div>
 
@@ -182,8 +183,9 @@
   <div class="todo-rightblock">
     <div class="todo-buttonblock">
         <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
+        <button type="button" class="btn" onclick="openWinCategory()">カテゴリーの追加</button>
         <button type="button" class="btn" onclick="openWinBuyEquipment()">装備を購入</button>
-        <button type="button" class="btn" onclick="openWinDispCharData()">ゲーム</button>
+        <button type="button" class="btn" onclick="openWinDispCharData()">ステータス確認</button>
     </div>
     <div class="todo-messageblock">
         <p id="message2">こんにちは！</p><br>
@@ -193,7 +195,7 @@
 
 
 <script>
-var myWindow,myWindow2,myWindow3//,myWindow5,myWindow6,myWindow7;
+var myWindow,myWindow2,myWindow3,myWindow4;
 
 function openWinTask() {
   myWindow = window.open("{% url 'todo:new' %}",'_blank');
@@ -202,8 +204,10 @@ function openWinBuyEquipment() {
   myWindow2 = window.open("buyWeapon2", "myWindow6", "top=200,left=200,width=600,height=450");
 }
 function openWinDispCharData() {
-
   myWindow3 = window.open("dispCharData", "myWindow7", "top=200,left=200,width=600,height=450");
+}
+function openWinCategory() {
+  myWindow4 = window.open("{% url 'todo:new_c' %}",'_blank');
 }
 
 /*上段メッセージ*/

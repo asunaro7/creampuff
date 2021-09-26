@@ -1,0 +1,8 @@
+{% extends 'todo/index.html'%}
+
+{% block contents %}
+ 現在の攻撃:{{ user.attack }}　/　現在までの総タスク完了数:{{ Game.task_counter }}　/　現在までの総攻撃数:{{ user.attack_sum }}<br>
+
+  {{ user.brave_name }} は {{ monster_name }} に {{ user.attack }} 攻撃した <br>
+  {{ monster_name }} の HP は {{ monster_hp }} になった
+{% endblock %}
