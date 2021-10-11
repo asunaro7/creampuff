@@ -115,10 +115,23 @@
      {% block contents %}
      現在の攻撃:{{ Player.attack }}　/　現在までの総タスク完了数:{{ Game.task_counter }}　/　現在までの総攻撃数:{{ Player.attack_sum }}<br>
      {% if Game.task_counter > 0 %}
+     <p>
       {{ Game.attack_name }} は {{ Game.damage_name }} に {{ Game.attack_power }} 攻撃した <br>
       {{ Game.damage_name }} の HP は {{ Game.damage_a_hp }} になった
+     </p>
      {% else %}
-       タスクを完了しよう！！
+     <p>タスクを完了しよう！！</p>
+     {% endif %}
+
+     {% if Game.mon %}
+     <p>{{ Game.damage_name }}は倒された！レベルが上がりました！！</p>
+     {% endif %}
+
+     {% if Game.pl %}
+     <p>
+       {{ Game.damage_name }}は倒されてしまった！ゲームオーバー！
+       最初の敵から一から始めよう！
+     </p>
      {% endif %}
      {% endblock %}
     </div>
@@ -150,6 +163,25 @@
     <div class="todo-taskblock">
         <div class="todo-allitem">
 
+          <h2>カテゴリー</h2>
+
+              <ul>
+                  <a href="{% url 'todo:index' %}">
+                      <li>トップ</li>
+                  </a>
+                  {% for category in category_list %}
+                      <a href="{% url 'todo:todo_category' category %}">
+                          <li>{{ category }}></li>
+                      </a>
+                  {% endfor %}
+              </ul>
+
+   {% block content %}
+
+   {% if category %}
+        <h2>カテゴリー: {{ category.title }}</h2>
+    {% endif %}
+
     {% for todos in todo %}
         <div class="todo-item">
 
@@ -178,18 +210,21 @@
          </div>
 
     {% endfor %}
+
+  {% endblock %}
   </div>
 
   <div class="todo-rightblock">
     <div class="todo-buttonblock">
         <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
-        <button type="button" class="btn" onclick="openWinCategory()">カテゴリーの追加</button>
+        <button type="button" class="btn" onclick="openWinCategory()">カテゴリーの追加・削除</button>
         <button type="button" class="btn" onclick="openWinBuyEquipment()">装備を購入</button>
         <button type="button" class="btn" onclick="openWinDispCharData()">ステータス確認</button>
     </div>
     <div class="todo-messageblock">
         <p id="message2">こんにちは！</p><br>
     </div>
+
   </div>
 </div>
 

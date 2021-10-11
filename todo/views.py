@@ -19,6 +19,8 @@ def index(request):
          'now':now,
          'Game':Game,
          'Player':Player,
+         # 'mon':mon,
+         # 'pl':pl,
     }
     return render(request, 'todo/index.html', content)
 
@@ -34,6 +36,12 @@ def todo_category(request, category):
     """カテゴリで絞り込む"""
     todo = Todo.objects.filter(category=category).order_by('title')
     return render(request, 'todo/index.html', {'todo': todo, 'category': category})
+
+"""カテゴリー削除"""
+def delete_category(request, id):
+    category = get_object_or_404(Category,pk=id)
+    category.delete()
+    return redirect('todo:new_c')
 
 """タスク内容表示"""
 def detail(request, pk):
@@ -85,43 +93,84 @@ def new_c(request):
         form_c = CategoryForm()
     return render(request, 'todo/new_c.html',{'forms':form_c})
 
+#-------------------------------------------------------------------#
 """ゲーム"""
 """完了ボタン"""
 def encount(request, id):
     todo = get_object_or_404(Todo,pk=id)
     field_name = 'level'
     field_value = getattr(todo, field_name)
+    Game.mon = False
+    Game.pl = False
     Game.task_counter += 1
+    n = Game.n
 
-    if todo.deadline_date > timezone.now():
+    if Player.hp == 0:
+        Player.hp = 1000
+
+    if Game.monster[n][1] == 0:
+        n += 1
+        Game.n = n
+
+    if todo.deadline_date > timezone.now(): #締め切りが間に合っている時
         Game.attack_name = Player.name
-        Game.damage_name = Game.monster[0][0]
-        Game.damage_a_hp = Game.monster[0][1]
+        Game.damage_name = Game.monster[n][0]
+        Game.damage_a_hp = Game.monster[n][1]
 
         Game.attack_power = int(field_value) * 100
         Player.attack_sum += Game.attack_power
         Player.attack = Game.attack_power
 
         Game.damage_a_hp -= Game.attack_power
-        Game.monster[0][1] = Game.damage_a_hp
+        if Game.damage_a_hp <= 0:
+            Game.mon = True
+            Game.monster[n][1] = 0
+            Player.level += 1
+        else:
+            Game.monster[n][1] = Game.damage_a_hp
 
-    else:
-        Game.attack_name = Game.monster[0][0]
+    else:                                      #締め切りがすぎている時
+        Game.attack_name = Game.monster[n][0]
         Game.damage_name = Player.name
         Game.damage_a_hp = Player.hp
 
-        Game.attack_power = Game.monster[0][2]
+        Game.attack_power = Game.monster[n][2]
 
         Game.damage_a_hp -= Game.attack_power
-        Player.hp = Game.damage_a_hp
+        if Game.damage_a_hp <= 0:
+            Game.pl = True
+            Player.hp = 0
+            Player.level = 0
+        else:
+            Player.hp = Game.damage_a_hp
 
         Player.attack = 0
 
+    if Player.hp == 0:
+        for monster in Game.monster:
+            monster[1] = monster[3]
 
+        Game.n = 0
+
+    field_name_title = 'title'
+    field_value_title = getattr(todo, field_name_title)
+    Game.task.append(field_value_title)
+    Game.task.append(field_value)
+
+    Game.task_history.append(Game.task)
+
+    Game.task.clear()
+    
     todo.delete()
 
     return redirect('todo:index')
 
+# """戦闘履歴"""
+# def history():
+
+
+
+#--------------------------------------------------------------#
 
 """武器購入画面表示"""
 def buyEquipment(request):

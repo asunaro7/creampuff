@@ -12,9 +12,26 @@
     <h2>カテゴリーの追加</h2>
     <form method="POST" class="category-form">{% csrf_token %}
         {{ forms.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        <button type="submit" class="save btn btn-default">追加する</button>
     </form>
     {% endblock %}
+
+    <h2>現在のカテゴリー</h2>
+
+        <ul>
+            {% for category in category_list %}
+                <li>
+                <form method="get" action="{% url 'todo:delete_category' category.pk %}">
+                  {{ category }}
+                    <input type="submit"
+                      value="削除"
+                      onclick="return confirm('本当に削除しますか？');"
+                    >
+                 </form>
+               </li>
+               <br>
+            {% endfor %}
+        </ul>
 
 
   </body>
