@@ -115,7 +115,6 @@ class MyArmorLower(models.Model):
 class User(models.Model):
     brave_name = models.CharField('名前',blank=True, null=True,default="勇者くん", max_length=50)
     hp = models.IntegerField('HP',blank=True, null=True,default=100)
-
     weapon = models.ForeignKey(MyWeapon,verbose_name = '武器', on_delete = models.PROTECT,default="木刀")
     armorHead  = models.ForeignKey(MyArmorHead,verbose_name = '防具　頭', on_delete = models.PROTECT,default="布の帽子")
     armorUpper  = models.ForeignKey(MyArmorUpper,verbose_name = '防具　上', on_delete = models.PROTECT,default="衣上")

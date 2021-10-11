@@ -34,4 +34,6 @@ urlpatterns = [
         path('<int:id>/armorLowerSelect/', views.armorLowerSelect, name='armorLowerSelect'),    # ←追加
         path('changeComplete', views.changeComplete, name='changeComplete'),    # ←追加
 
+        path('<int:id>/deadline_date/', views.deadline_date, name='deadline_date'),    # ←追加
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #追加

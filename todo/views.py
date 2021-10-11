@@ -2,11 +2,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Todo, Category, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower, User, User2
-from .models_game import Game, Player
+from .models_game import Game, Player, Manekin
 from .forms import TodoForm
 from .forms_category import CategoryForm
 from django.utils import timezone
-
 
 
 """一覧表示"""
@@ -19,8 +18,6 @@ def index(request):
          'now':now,
          'Game':Game,
          'Player':Player,
-         # 'mon':mon,
-         # 'pl':pl,
     }
     return render(request, 'todo/index.html', content)
 
@@ -104,6 +101,7 @@ def encount(request, id):
     Game.pl = False
     Game.task_counter += 1
     n = Game.n
+    Game.deadlineFlg = 0
 
     if Player.hp == 0:
         Player.hp = 1000
@@ -146,6 +144,8 @@ def encount(request, id):
 
         Player.attack = 0
 
+        Game.deadlineFlg = 1
+
     if Player.hp == 0:
         for monster in Game.monster:
             monster[1] = monster[3]
@@ -160,7 +160,7 @@ def encount(request, id):
     Game.task_history.append(Game.task)
 
     Game.task.clear()
-    
+
     todo.delete()
 
     return redirect('todo:index')
@@ -172,19 +172,30 @@ def encount(request, id):
 
 #--------------------------------------------------------------#
 
-"""武器購入画面表示"""
-def buyEquipment(request):
-    weapon = MyWeapon.objects.order_by('myName')
+"""締め切り日時オーバー"""
+def deadline_date(request):
+    todo = Todo.objects.order_by('title')
     user = User.objects.first()
-    return render(request, 'todo/buyEquipment.html', {'user': user,'weapon': weapon})
+    user.hp -= 1000
+    user.save()
+
+#    return redirect('todo:index')
+    return redirect('todo:index', {'user': user})
 
 """武器購入画面表示"""
 def buyWeapon2(request):
     todo = Todo.objects.order_by('title')
     return render(request, 'todo/buyWeapon.html', {'todo': todo})
 
+"""武器購入画面表示"""
+def buyEquipment(request):
+    weapon = MyWeapon.objects.order_by('myName')
+    user = User.objects.first()
+    return render(request, 'todo/buyEquipment.html', {'user': user,'weapon': weapon})
+
 """装備購入（武器）"""
 def buyWeapon(request, id):
+    from .models import User2
     weapon = get_object_or_404(MyWeapon,pk=id)
     user = User.objects.first()
 
@@ -192,7 +203,6 @@ def buyWeapon(request, id):
     user.money -= weapon.price
     user.save()
     weapon.save()
-
     return redirect('todo:buyEquipment')
 
 """キャラクタ表示"""
@@ -221,25 +231,6 @@ def dispCharData(request):
 
 """装備変更表示"""
 def changeEquipment(request):
-    user11 = User.objects.first()
-    print(User.objects.count())
-    if User2.objects.count() >= 1:
-        user12 = User2.objects.first()
-        user12.brave_name = user11.brave_name
-        user12.weapon = user11.weapon
-        user12.armorHead = user11.armorHead
-        user12.armorUpper = user11.armorUpper
-        user12.armorLower = user11.armorLower
-        user12.save()
-    else:
-        user12 = User2.objects.create(id=1,brave_name="勇者くん",armorHead_id = 2,armorUpper_id = 2,armorLower_id = 2,weapon_id = 2)
-        user12.brave_name = user11.brave_name
-        user12.weapon = user11.weapon
-        user12.armorHead = user11.armorHead
-        user12.armorUpper = user11.armorUpper
-        user12.armorLower = user11.armorLower
-        user12.save()
-
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
@@ -250,127 +241,223 @@ def changeEquipment(request):
     money = Player.money
     level = Player.level
 
-    weapon = Player.Weapon[0]
-    armorHead = Player.ArmorHead[0]
-    armorUpper = Player.ArmorUpper[0]
-    armorLower = Player.ArmorLower[0]
+    Manekin.Weapon[0] = Player.Weapon[0]
+    Manekin.ArmorHead[0] = Player.ArmorHead[0]
+    Manekin.ArmorUpper[0] = Player.ArmorUpper[0]
+    Manekin.ArmorLower[0] = Player.ArmorLower[0]
 
     txt2 = {
-    'user': user11,
-    'user2': user12,
     'wpn': wpn,
     'amrH': amrH,
     'amrU': amrU,
     'amrL': amrL,
+
     'name':name,
     'hp':hp,
     'money':money,
     'level':level,
-    'weapon':weapon,
-    'armorHead':armorHead,
-    'armorUpper':armorUpper,
-    'armorLower':armorLower,
-    }
-    #
-    # name = Player.name
-    # hp = Player.hp
-    # money = Player.money
-    # level = Player.level
-    #
-    # weapon = Player.Weapon[0]
-    # armorHead = Player.ArmorHead[0]
-    # armorUpper = Player.ArmorUpper[0]
-    # armorLower = Player.ArmorLower[0]
-    #
-    # txt1 ={
-    #     'name':name,
-    #     'hp':hp,
-    #     'money':money,
-    #     'level':level,
-    #     'weapon':weapon,
-    #     'armorHead':armorHead,
-    #     'armorUpper':armorUpper,
-    #     'armorLower':armorLower,
-    # }
 
+    'P_weapon':Player.Weapon[0],
+    'P_armorHead':Player.ArmorHead[0],
+    'P_armorUpper':Player.ArmorUpper[0],
+    'P_armorLower':Player.ArmorLower[0],
+
+    'M_weapon':Manekin.Weapon[0],
+    'M_armorHead':Manekin.ArmorHead[0],
+    'M_armorUpper':Manekin.ArmorUpper[0],
+    'M_armorLower':Manekin.ArmorLower[0],
+    }
     return render(request, 'todo/changeEquipment.html', txt2)
 
 """装備変更選択（武器）"""
 def weaponSelect(request, id):
     weapon = get_object_or_404(MyWeapon,pk=id)
-    user = User.objects.first()
-    user2 = User2.objects.first()
+
     if weapon.num >= 1:
-        user2.weapon = weapon
-        user2.save()
+        Manekin.Weapon[0] = weapon.myName
+        Manekin.Weapon[1] = weapon.attackPower
+        Manekin.Weapon[2] = weapon.defensePower
+        Manekin.Weapon[3] = weapon.hpRecoveryPower
+        Manekin.Weapon[4] = weapon.price
+        Manekin.Weapon[5] = weapon.num
+
+    name = Player.name
+    hp = Player.hp
+    money = Player.money
+    level = Player.level
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
-    return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+    txt2 = {
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL,
+
+    'name':name,
+    'hp':hp,
+    'money':money,
+    'level':level,
+
+    'P_weapon':Player.Weapon[0],
+    'P_armorHead':Player.ArmorHead[0],
+    'P_armorUpper':Player.ArmorUpper[0],
+    'P_armorLower':Player.ArmorLower[0],
+
+    'M_weapon':Manekin.Weapon[0],
+    'M_armorHead':Manekin.ArmorHead[0],
+    'M_armorUpper':Manekin.ArmorUpper[0],
+    'M_armorLower':Manekin.ArmorLower[0],
+    }
+
+    return render(request, 'todo/changeEquipment.html', txt2)
 
 """装備変更選択（防具　頭）"""
 def armorHeadSelect(request, id):
     armorHead = get_object_or_404(MyArmorHead,pk=id)
-    user = User.objects.first()
-    user2 = User2.objects.first()
+
     if armorHead.num >= 1:
-        user2.armorHead = armorHead
-        user2.save()
+        Manekin.ArmorHead[0] = armorHead.myName
+        Manekin.ArmorHead[1] = armorHead.attackPower
+        Manekin.ArmorHead[2] = armorHead.defensePower
+        Manekin.ArmorHead[3] = armorHead.hpRecoveryPower
+        Manekin.ArmorHead[4] = armorHead.price
+        Manekin.ArmorHead[5] = armorHead.num
+
+    name = Player.name
+    hp = Player.hp
+    money = Player.money
+    level = Player.level
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
-    return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+    txt2 = {
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL,
+
+    'name':name,
+    'hp':hp,
+    'money':money,
+    'level':level,
+
+    'P_weapon':Player.Weapon[0],
+    'P_armorHead':Player.ArmorHead[0],
+    'P_armorUpper':Player.ArmorUpper[0],
+    'P_armorLower':Player.ArmorLower[0],
+
+    'M_weapon':Manekin.Weapon[0],
+    'M_armorHead':Manekin.ArmorHead[0],
+    'M_armorUpper':Manekin.ArmorUpper[0],
+    'M_armorLower':Manekin.ArmorLower[0],
+    }
+
+    return render(request, 'todo/changeEquipment.html', txt2)
 
 """装備変更選択（防具　上）"""
 def armorUpperSelect(request, id):
     armorUpper = get_object_or_404(MyArmorUpper,pk=id)
-    user = User.objects.first()
-    user2 = User2.objects.first()
+
     if armorUpper.num >= 1:
-        user2.armorUpper = armorUpper
-        user2.save()
+        Manekin.ArmorUpper[0] = armorUpper.myName
+        Manekin.ArmorUpper[1] = armorUpper.attackPower
+        Manekin.ArmorUpper[2] = armorUpper.defensePower
+        Manekin.ArmorUpper[3] = armorUpper.hpRecoveryPower
+        Manekin.ArmorUpper[4] = armorUpper.price
+        Manekin.ArmorUpper[5] = armorUpper.num
+
+    name = Player.name
+    hp = Player.hp
+    money = Player.money
+    level = Player.level
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
-    return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+    txt2 = {
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL,
+
+    'name':name,
+    'hp':hp,
+    'money':money,
+    'level':level,
+
+    'P_weapon':Player.Weapon[0],
+    'P_armorHead':Player.ArmorHead[0],
+    'P_armorUpper':Player.ArmorUpper[0],
+    'P_armorLower':Player.ArmorLower[0],
+
+    'M_weapon':Manekin.Weapon[0],
+    'M_armorHead':Manekin.ArmorHead[0],
+    'M_armorUpper':Manekin.ArmorUpper[0],
+    'M_armorLower':Manekin.ArmorLower[0],
+    }
+
+    return render(request, 'todo/changeEquipment.html', txt2)
 
 """装備変更選択（防具　下）"""
 def armorLowerSelect(request, id):
     armorLower = get_object_or_404(MyArmorLower,pk=id)
-    user = User.objects.first()
-    user2 = User2.objects.first()
+
     if armorLower.num >= 1:
-        user2.armorLower = armorLower
-        user2.save()
+        Manekin.ArmorLower[0] = armorLower.myName
+        Manekin.ArmorLower[1] = armorLower.attackPower
+        Manekin.ArmorLower[2] = armorLower.defensePower
+        Manekin.ArmorLower[3] = armorLower.hpRecoveryPower
+        Manekin.ArmorLower[4] = armorLower.price
+        Manekin.ArmorLower[5] = armorLower.num
+
+    name = Player.name
+    hp = Player.hp
+    money = Player.money
+    level = Player.level
 
     wpn = MyWeapon.objects.order_by('myName')
     amrH = MyArmorHead.objects.order_by('myName')
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
 
-    return render(request, 'todo/changeEquipment.html', {'user': user,'user2': user2, 'wpn': wpn, 'amrH': amrH, 'amrU': amrU, 'amrL': amrL})
+    txt2 = {
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL,
+
+    'name':name,
+    'hp':hp,
+    'money':money,
+    'level':level,
+
+    'P_weapon':Player.Weapon[0],
+    'P_armorHead':Player.ArmorHead[0],
+    'P_armorUpper':Player.ArmorUpper[0],
+    'P_armorLower':Player.ArmorLower[0],
+
+    'M_weapon':Manekin.Weapon[0],
+    'M_armorHead':Manekin.ArmorHead[0],
+    'M_armorUpper':Manekin.ArmorUpper[0],
+    'M_armorLower':Manekin.ArmorLower[0],
+    }
+
+    return render(request, 'todo/changeEquipment.html', txt2)
 
 """装備変更完了"""
 def changeComplete(request):
-    user = User.objects.first()
-    user2 = User2.objects.first()
-    user.weapon = user2.weapon
-    user.armorHead = user2.armorHead
-    user.armorUpper = user2.armorUpper
-    user.armorLower = user2.armorLower
-    user.save()
-
-    wpn = MyWeapon.objects.order_by('myName')
-    amrH = MyArmorHead.objects.order_by('myName')
-    amrU = MyArmorUpper.objects.order_by('myName')
-    amrL = MyArmorLower.objects.order_by('myName')
+    for i in range(6):
+        Player.Weapon[i] = Manekin.Weapon[i]
+        Player.ArmorHead[i] = Manekin.ArmorHead[i]
+        Player.ArmorUpper[i] = Manekin.ArmorUpper[i]
+        Player.ArmorLower[i] = Manekin.ArmorLower[i]
     return redirect('todo:dispCharData')
