@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Player(models.Model):
     name = '勇者くん1'
-    hp = 1000000
+    hp = 1000
     money = 100
     level = 1
 
@@ -20,12 +20,14 @@ class Player(models.Model):
 
 class Game(models.Model):
     task_counter = 0
-    #[名前,HP,攻撃力]
+    mon = False
+    pl = False
+    #[名前,HP,攻撃力,HP記録]
     monster = [
-      ['モンスターA', 1000, 10],
-      ['モンスターB', 10000, 50],
-      ['モンスターC', 100000, 100],
-      ['モンスターD', 1000000, 200],
+      ['モンスターA', 1000, 10, 1000],
+      ['モンスターB', 10000, 50, 10000],
+      ['モンスターC', 100000, 100, 100000],
+      ['モンスターD', 1000000, 200, 1000000],
     ]
 
     attack_name = Player.name
@@ -33,3 +35,10 @@ class Game(models.Model):
 
     attack_power = 0
     damage_a_hp = monster[0][1]
+
+    n = 0
+
+    moster_history = []
+
+    task = []
+    task_history = []
