@@ -4,33 +4,72 @@
   <title>RPGタスク</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
 
   <style>
     html * {
       box-sizing: border-box;       /*内部要素すべてに摘要*/
     }
-    body {
-/*      background-image: url(/media/images/Old-map3.jpg);*/       /*内部要素すべてに摘要*/
-      background-repeat: no-repeat;       /*内部要素すべてに摘要*/
-    }
-
     h2 {
       color: blue;
       margin-left: 20px;
-/*      border-bottom: 1px dotted #3f5170;*/
+    }
+    .todo-Upperblock{
+      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+      width: 100vw;
+      height: auto;
+      background-color: #c0c0c0;
     }
     .todo-gameblock{
-      margin: 20px 20px 0 20px;     /*上、右、下、左*/
+      position: relative;
+      margin: 20px 20px 0 0;     /*上、右、下、左*/
       width: 100vw;
-      height: 100px;
+      height: 200px;
       background-color: #c0c0c0;
+      background-repeat:repeat-x;
+      background-image: url(/media/images/モンスター森背景.jpg);       /*内部要素すべてに摘要*/
     }
-    .todo-video{
-      margin: 20px 20px 0 20px;     /*上、右、下、左*/
-      width: 100vw;
-      height: 100px;
-      background-color: #c0c0c0;
+    .todo-telopblock{
+      color: white;
+    }
+    .todo-animeComment{
+      position: absolute;
+      top: 50px;
+      left: calc(50% - 70px);
+      color: yellow;
+      visibility: hidden;
+    }
+    .todo-animeComment1{
+      position: absolute;
+      top: 80px;
+      left: calc(50% - 90px);
+      color: yellow;
+      visibility: hidden;
+    }
+    .todo-animeComment2{
+      position: absolute;
+      top: 80px;
+      left: calc(50% + 70px);
+      color: yellow;
+      visibility: hidden;
+    }
+    .todo-animeComment3{
+      position: absolute;
+      top: 150px;
+      left: calc(50% - 110px);
+      color: yellow;
+      visibility: hidden;
+    }
+    .todo-enemyChar{
+      position: absolute;
+      top: 70px;
+      left: calc(50% - 80px);
+      visibility: hidden;
     }
     .todo-tasktitleblock{
       display: flex;                /*内部要素の横並び*/
@@ -48,26 +87,18 @@
     .todo-taskblock{
       display: flex;                /*内部要素の横並び*/
       margin: 20px 20px 0 20px;     /*上、右、下、左*/
-/*      background-image: url(/media/images/Old-map3.jpg);*/       /*内部要素すべてに摘要*/
-/*      background-repeat: no-repeat;*/       /*内部要素すべてに摘要*/
     }
     .todo-allitem{
       text-align: left;
       border: 1px solid #3f5170;
-      width: 50vw;
+      width: 100vw;
       margin-right: 20px;
-/*      background-image: url(desk.jpg);*/
     }
     .todo-item{
       text-align: left;
-      border-bottom: 1px solid #3f5170;
       margin: 10px 10px 0 10px;
+      padding: 10px 20px 10px 20px;
       background-color: #99ffcc;
-    }
-    .todo-item:hover{
-      text-align: left;
-      border-bottom: 1px solid #3f5170;
-      margin: 10px 10px 0 10px;
     }
     .todo-rightblock{
       display: flex;                /*内部要素の横並び*/
@@ -99,6 +130,71 @@
       transition: 2s;             /* 1秒かけて動く */
     }
 
+    /* variables */
+    $bkg: #f7f8fc;
+    $l-grad-hex-100: #efeff6;
+    $l-grad-rgba-100: rgba(179, 202, 226, 0.28);
+
+    $d-grad-100: dark;
+
+    body{
+       //background: linear-gradient(318.32deg, #C3D1E4 0%, #DDE7F3 55%, #D4E0ED 100%);
+        background: #e0e5ec;
+        min-height: 100vh;
+    }
+    .wrapper{
+      margin: 60px auto;
+    }
+
+    .neumorphism {
+      background-color: #e0e5ec;
+      //dark
+      box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+      //light
+      //box-shadow: 4px 2px 16px rgba(136, 165, 191, 0.48), -4px -2px 16px #FFFFFF;
+    }
+
+    .card-w{
+        display: flex;
+        margin-bottom: 20px;
+      .card{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 30px;
+        border-radius: 30px;
+        position: relative;
+      background: transparent;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+
+        .card__icon{
+
+        }
+        .card__text{
+          text-align: center;
+        }
+      }
+    }
+
+
+
+    /* inset */
+    .card.inset {
+        box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48), inset -3px -3px 7px #FFFFFF;
+        i {
+            text-shadow: 1px 1px 1px #d6e1ef99, 0 0 0 #000, 1px 1px 1px #d6e1ef00;
+        }
+    }
+
+    .card.active {
+        box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+          -9px -9px 16px rgba(255, 255, 255, 0.5),
+           inset 3px 3px 7px rgba(136, 165, 191, 0.48),
+          inset -3px -3px 7px #FFFFFF;
+        background: linear-gradient(318.32deg, rgba(163, 177, 198, 0.1) 0%, rgba(163, 177, 198, 0.1) 55%, rgba(163, 177, 198, 0.25) 100%);
+    }
+
   </style>
 
 
@@ -108,41 +204,41 @@
 <body>
 <!--<body onload="LoadProc();">-->
 
+
     <h2>ゲーム画面</h2>
 
-    <div class="todo-gameblock">
+    <div class="todo-Upperblock">
+        <div class="todo-gameblock">
+            {% block contents %}
+                <div class="todo-telopblock">
+                  現在の攻撃:{{ Player.attack }}　/　現在までの総タスク完了数:{{ Game.task_counter }}　/　現在までの総攻撃数:{{ Player.attack_sum }}<br>
+                  {% if Game.task_counter > 0 %}
+                  <p>
+                   {{ Game.attack_name }} は {{ Game.damage_name }} に {{ Game.attack_power }} 攻撃した <br>
+                   {{ Game.damage_name }} の HP は {{ Game.damage_a_hp }} になった
+                  </p>
+                  {% else %}
+                  <p>タスクを完了しよう！！</p>
+                  {% endif %}
 
-     {% block contents %}
-     現在の攻撃:{{ Player.attack }}　/　現在までの総タスク完了数:{{ Game.task_counter }}　/　現在までの総攻撃数:{{ Player.attack_sum }}<br>
-     {% if Game.task_counter > 0 %}
-     <p>
-      {{ Game.attack_name }} は {{ Game.damage_name }} に {{ Game.attack_power }} 攻撃した <br>
-      {{ Game.damage_name }} の HP は {{ Game.damage_a_hp }} になった
-     </p>
-     {% else %}
-     <p>タスクを完了しよう！！</p>
-     {% endif %}
+                  {% if Game.mon %}
+                  <p>{{ Game.damage_name }}は倒された！レベルが上がりました！！</p>
+                  {% endif %}
 
-     {% if Game.mon %}
-     <p>{{ Game.damage_name }}は倒された！レベルが上がりました！！</p>
-     {% endif %}
-
-     {% if Game.pl %}
-     <p>
-       {{ Game.damage_name }}は倒されてしまった！ゲームオーバー！
-       最初の敵から一から始めよう！
-     </p>
-     {% endif %}
-     {% endblock %}
-    </div>
-
-    <div class="todo-videoblock">
-        <video class="todo-video" poster="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/img/movie.jpg" webkit-playsinline playsinline muted autoplay loop>
-            <source src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/video/movie.mp4" type="video/mp4">
-            <source src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/video/movie.ogv" type="video/ogv">
-            <source src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-3-1/video/movie.webm" type="video/webm">
-            <p>動画を再生できる環境ではありません。</p>
-        </video>
+                  {% if Game.pl %}
+                  <p>
+                    {{ Game.damage_name }}は倒されてしまった！ゲームオーバー！
+                    最初の敵から一から始めよう！
+                  </p>
+                  {% endif %}
+                </div>
+            {% endblock %}
+            <img class = "todo-enemyChar" id="enemyChar" src="/media/images/ドラゴン青140攻撃.png"><br>
+            <div class = "todo-animeComment" id="animeComment">モンスターが現れた</div>
+            <div class = "todo-animeComment1" id="animeComment1">バキ</div>
+            <div class = "todo-animeComment2" id="animeComment2">バキ</div>
+            <div class = "todo-animeComment3" id="animeComment3">バキ</div>
+        </div>
     </div>
 
 </body>
@@ -154,6 +250,16 @@
       <div class="todo-todaymessageblock">
           <p id="message">こんにちは！</p><br>
       </div>
+      <div class="todo-messageblock">
+          <p id="message2">こんにちは！</p><br>
+      </div>
+  </div>
+
+  <div class="todo-buttonblock float-right">
+      <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
+      <button type="button" class="btn" onclick="openWinCategory()">カテゴリーの追加・削除</button>
+      <button type="button" class="btn" onclick="openWinBuyEquipment()">装備を購入</button>
+      <button type="button" class="btn" onclick="openWinDispCharData()">ステータス確認</button>
   </div>
 
     {% if delete %}
@@ -182,52 +288,55 @@
         <h2>カテゴリー: {{ category.title }}</h2>
     {% endif %}
 
+    <div class="container wrapper"><!-- 追加   -->
+    <div class="row"><!-- 追加   -->
+
     {% for todos in todo %}
+        <div class="card-w col-md-4"><!-- 追加   -->
+        <div class="card__icon"><!-- 追加   -->
+
+        </div><!-- 追加   -->
+
         <div class="todo-item">
 
         <!--  ****************************************<br>-->
-            <a href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a><br>
-            カテゴリー:{{　todos.category　}}<br>
-            {% if todos.deadline_date < now %}
-               締切日:<span style="color:red">{{ todos.deadline_date　}}</span> <b>締め切りをすぎています！</b><br>
-            {% else %}
-               締切日:<span style="color:blue">{{ todos.deadline_date　}}</span><br>
-            {% endif %}
-            難易度：{{　todos.level　}}<br>
-       <form method="POST" action="{% url 'todo:delete' todos.pk %}">
-           {% csrf_token %}
-           <form method="get" action="{% url 'todo:delete' todos.pk %}">
-               <input type="submit"
-                 value="削除"
-                 onclick="return confirm('本当に削除しますか？');"
-               >
-            </form>
-            <form method="POST" action="{% url 'todo:encount' todos.pk %}">
-                {% csrf_token %}
-                <button type="submit" name="completeBtn"><span style="color:red">完了</span></button>
-            </form>
+        <a href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a><br>
+
+          <div class="card__text"><!-- 追加   -->
+             カテゴリー:{{　todos.category　}}<br>
+             {% if todos.deadline_date < now %}
+                締切日:<span style="color:red">{{ todos.deadline_date　}}</span> <b name="deadlineMsg">締め切りをすぎています！</b><br>
+             {% else %}
+                締切日:<span style="color:blue">{{ todos.deadline_date　}}</span><b name="deadlineMsg"></b><br>
+             {% endif %}
+             難易度：{{　todos.level　}}<br>
+             タスクNO：<span name="todosNo">{{　todos.pk　}}<br>
+          </div><!-- 追加   -->
+
+        <form method="POST" action="{% url 'todo:delete' todos.pk %}">
+            {% csrf_token %}
+            <input type="submit" name="deleteBtn"
+              value="削除"
+              onclick="return confirm('本当に削除しますか？');"
+            >
+        </form>
+        <form method="POST" action="{% url 'todo:encount' todos.pk %}">
+            {% csrf_token %}
+            <button type="submit" name="compBtn"><span style="color:red">完了</span></button>
+        </form>
         <!--  ****************************************<br> -->
          </div>
 
+         </div><!-- 追加   -->
+
     {% endfor %}
+
+    </div><!-- 追加   -->
+    </div><!-- 追加   -->
 
   {% endblock %}
   </div>
-
-  <div class="todo-rightblock">
-    <div class="todo-buttonblock">
-        <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
-        <button type="button" class="btn" onclick="openWinCategory()">カテゴリーの追加・削除</button>
-        <button type="button" class="btn" onclick="openWinBuyEquipment()">装備を購入</button>
-        <button type="button" class="btn" onclick="openWinDispCharData()">ステータス確認</button>
-    </div>
-    <div class="todo-messageblock">
-        <p id="message2">こんにちは！</p><br>
-    </div>
-
   </div>
-</div>
-
 
 <script>
 var myWindow,myWindow2,myWindow3,myWindow4;
@@ -258,42 +367,223 @@ if (hour < 2){
   elm.textContent = '遅くまでがんばっているね、お疲れ様です。';
 } else if(hour < 12){
   elm.textContent = '今日も一日頑張ろう！';
+} else if(hour < 18){
+  elm.textContent = 'こんにちは！';
 } else{
-  elm.textContent = 'こんちくしょう！';
+  elm.textContent = 'こんばんは！';
 }
 /****************/
 /*下段メッセージ*/
-var btnElements = document.getElementsByName("completeBtn");                          /*数箇所*/
+var startBtnElement = document.getElementById("startBtn");
+var compBtnElements = document.getElementsByName("compBtn");                          /*数箇所*/
+var delBtnElements = document.getElementsByName("deleteBtn");                          /*数箇所*/
+var enemyCharElement = document.getElementById('enemyChar');
+var animeCommentElement = document.getElementById('animeComment');
+var animeCommentElement1 = document.getElementById('animeComment1');
+var animeCommentElement2 = document.getElementById('animeComment2');
+var animeCommentElement3 = document.getElementById('animeComment3');
+var deadlineMsgElements = document.getElementsByName("deadlineMsg");                          /*数箇所*/
+var todosNoElements = document.getElementsByName("todosNo");                          /*数箇所*/
 var storage = localStorage;
-
+var d = 0;s = 1;cnt = 0;
+var x = 10; y = -10;
+/****************/
+/*完了ボタンでのメッセージ表示後一定時間（3秒）後のメッセージ表示*/
 var fn = function(){
     elm2.textContent = 'やればできる！君ならできる！';
-    storage.msgFlg = 0;
 };
-
-for (let i = 0; i < btnElements.length; i++) {
-    btnElements[i].addEventListener('click', function() {
-        storage.msgFlg = 1;
-    }, false);
-}
-
-if (storage.msgFlg == 1){
-        elm2.textContent = 'やったね！';
-        setTimeout(fn, 3000);
-}
 /****************/
-/*時刻比較途中*/
-var dateElements = document.getElementsByName("deadline_date");                          /*数箇所*/
-var itemElements = document.getElementsByClassName("todo-item");                          /*数箇所*/
-var hour = now.getHours();
-console.log(123);
-console.log(dateElements[0]+":"+now);
-for (let i = 0; i < dateElements.length; i++) {
-    console.log(dateElements[i]+":"+now);
-    if (dateElements[i] < now){
-      console.log(dateElements[i]+":"+now);
+/*完了ボタン後一定時間（10秒）後にアニメ表示フラグ落とす処理*/
+var fn22 = function(){
+    storage.completeFlg = 0;
+};
+/****************/
+/*締切日時過ぎのアニメ処理の一定時間後のアニメ表示フラグ落とす処理*/
+var fn32 = function(){
+    storage.completeFlg = 0;
+};
+/****************/
+/*完了ボタン後あなたの攻撃アニメ表示処理(モンスターhp<=0、倒され飛んでいく時)*/
+var fn20 = function(){
+    cnt = cnt + 1;
+    if (cnt <= 20){
+    }else if (cnt <= 50){
+        s = 1.5 - s;
+        x = -x;y = -y;
+        enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) scale(" + s + "," + s + ")";
+        animeCommentElement.textContent = 'あなたの攻撃！';
+        animeCommentElement1.textContent = "バキ";
+        animeCommentElement2.textContent = "バキ";
+        animeCommentElement3.textContent = "バキ";
+        if(cnt % 2 == 1){
+            animeCommentElement.style.visibility = "visible";
+            animeCommentElement1.style.visibility = "visible";
+            animeCommentElement2.style.visibility = "visible";
+            animeCommentElement3.style.visibility = "visible";
+        }else{
+            animeCommentElement.style.visibility = "hidden";
+            animeCommentElement1.style.visibility = "hidden";
+            animeCommentElement2.style.visibility = "hidden";
+            animeCommentElement3.style.visibility = "hidden";
+        }
+    }else if (cnt <= 80){
+        d = d + 90;
+        if (s > 0) s = s - 0.03;
+        x = x + 20;y = y - 12;
+        enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) rotate(" + d + "deg) scale(" + s + "," + s + ")";
+        animeCommentElement.remove();
+        animeCommentElement1.remove();
+        animeCommentElement2.remove();
+        animeCommentElement3.remove();
+    }else{
+        enemyCharElement.remove();
     }
 }
 /****************/
+/*完了ボタン後あなたの攻撃アニメ表示処理(モンスターhp＞0、攻撃されただけの時)*/
+var fn21 = function(){
+    cnt = cnt + 1;
+    if (cnt <= 20){
+    }else if (cnt <= 50){
+        s = 1.5 - s;
+        x = -x;y = -y;
+        enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) scale(" + s + "," + s + ")";
+        animeCommentElement.textContent = 'あなたの攻撃！';
+        animeCommentElement1.textContent = "バキ";
+        animeCommentElement2.textContent = "バキ";
+        animeCommentElement3.textContent = "バキ";
+        if(cnt % 2 == 1){
+            animeCommentElement.style.visibility = "visible";
+            animeCommentElement1.style.visibility = "visible";
+            animeCommentElement2.style.visibility = "visible";
+            animeCommentElement3.style.visibility = "visible";
+        }else{
+            animeCommentElement.style.visibility = "hidden";
+            animeCommentElement1.style.visibility = "hidden";
+            animeCommentElement2.style.visibility = "hidden";
+            animeCommentElement3.style.visibility = "hidden";
+        }
+    }else{
+      animeCommentElement.remove();
+      animeCommentElement1.remove();
+      animeCommentElement2.remove();
+      animeCommentElement3.remove();
+        enemyCharElement.remove();
+    }
+}
+/****************/
+/*締切日時過ぎでのアニメ処理*/
+var fn30 = function(){
+    cnt = cnt + 1;
+    if (cnt <= 20){
+    }else if (cnt <= 32){
+        console.log("103_fn30:cnt:"+cnt+":x:"+x+" y:"+y);
+        d = d + 90;
+        s = s + 0.03;
+        x = x + 20;y = y - 12;
+        enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) rotate(" + d + "deg) scale(" + s + "," + s + ")";
+    }else if (cnt <= 38 ){
+        console.log("103_fn30:cnt:"+cnt+":x:"+x+" y:"+y);
+        s = s + 0.06;
+        x = x - 40;y = y + 24;
+        enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) rotate(" + d + "deg) scale(" + s + "," + s + ")";
+        animeCommentElement.style.visibility = "visible";
+  }else if (cnt <= 50 ){
+      console.log("103_fn30:cnt:"+cnt+":x:"+x+" y:"+y);
+      animeCommentElement.textContent = 'サキュパスの攻撃！';
+      animeCommentElement1.textContent = "ドスン";
+      animeCommentElement2.textContent = "ドスン";
+      animeCommentElement3.textContent = "ドスン";
+      if(cnt % 2 == 1){
+          s = s - 1.0;
+          x = x + 40;y = y - 24;
+          enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) rotate(" + d + "deg) scale(" + s + "," + s + ")";
+          animeCommentElement.style.visibility = "visible";
+          animeCommentElement1.style.visibility = "visible";
+          animeCommentElement2.style.visibility = "visible";
+          animeCommentElement3.style.visibility = "visible";
+      }else{
+          s = s + 1.0;
+          x = x - 40;y = y + 24;
+          enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) rotate(" + d + "deg) scale(" + s + "," + s + ")";
+          animeCommentElement.style.visibility = "hidden";
+          animeCommentElement1.style.visibility = "hidden";
+          animeCommentElement2.style.visibility = "hidden";
+          animeCommentElement3.style.visibility = "hidden";
+      }
+    }else {
+        enemyCharElement.remove();
+        animeCommentElement.remove();
+        animeCommentElement1.remove();
+        animeCommentElement2.remove();
+        animeCommentElement3.remove();
+    }
+}
+
+/****************/
+/*完了ボタン締切チェック（締切メッセージ有無）処理*/
+for (let i = 0; i < compBtnElements.length; i++) {
+    console.log("102_msgFlg2:"+storage.msgFlg2);
+    compBtnElements[i].addEventListener('click', function() {
+        storage.completeFlg = 1;
+        storage.msgFlg2 = i;
+    }, false);
+}
+
+
+
+console.log("101_len:"+storage.length);
+/****************/
+/*完了ボタンクリック後のアニメ表示処理(fn20)、消去処理(fn22)*/
+for (let i = 0; i < compBtnElements.length; i++) {
+  console.log("103_deadlineMsgElements[i].textContent:"+i+":"+deadlineMsgElements[i].textContent);
+}
+if (storage.completeFlg == 1){
+    console.log("103_storage.msgFlg2:"+storage.msgFlg2);
+
+    if ( {{ Game.deadlineFlg}} == 1 ){
+
+        elm2.textContent = '残念だったけどよく頑張ったね！';
+        var timer1 = setTimeout(fn, 3000);
+        console.log("105_msgFlg2:"+storage.msgFlg2);
+        storage.msgFlg2 = 99;
+
+        enemyCharElement.style.visibility = "visible";
+        animeCommentElement.style.visibility = "visible";
+        var timer2 = setInterval(fn30, 100);
+        var timer3 = setTimeout(fn32, 10000);
+
+    }else{
+
+
+        elm2.textContent = 'やったね！';
+        var timer1 = setTimeout(fn, 3000);
+        console.log("106_msgFlg2:"+storage.msgFlg2);
+        storage.msgFlg2 = 99;
+
+        enemyCharElement.style.visibility = "visible";
+        animeCommentElement.style.visibility = "visible";
+
+        if ( {{ Game.damage_a_hp }} > 0 ){
+            console.log("107_msgFlg2:"+storage.msgFlg2);
+            var timer2 = setInterval(fn21, 100);
+            var timer3 = setTimeout(fn22, 10000);
+        }else{
+            console.log("108_msgFlg2:"+storage.msgFlg2);
+            var timer2 = setInterval(fn20, 100);
+            var timer3 = setTimeout(fn22, 10000);
+        }
+    }
+
+}
+console.log("120_msgFlg2:"+storage.msgFlg2);
+console.log("120_completeFlg:"+storage.completeFlg);
+if (storage.completeFlg == 0){
+    enemyCharElement.style.visibility = "hidden";
+    animeCommentElement.style.visibility = "hidden";
+    animeCommentElement1.style.visibility = "hidden";
+    animeCommentElement2.style.visibility = "hidden";
+    animeCommentElement3.style.visibility = "hidden";
+}
 
 </script>

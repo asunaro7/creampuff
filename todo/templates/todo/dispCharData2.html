@@ -1,0 +1,185 @@
+
+    <!-- /todo/templates/todo/index.html -->
+    {% load static %}
+    <head>
+      <title>RPGタスク</title>
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <!--<link rel="stylesheet" href="{% static 'css/style.css' %}">-->
+      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+
+
+      <style>
+        html * {
+          box-sizing: border-box;       /*内部要素すべてに摘要*/
+        }
+
+        h2 {
+          color: blue;
+          margin-left: 20px;
+/*          border-bottom: 1px dotted #3f5170;*/
+        }
+        .todo-gameblock{
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+          width: 100vw;
+          height: 50px;
+          background-color: #c0c0c0;
+    #        background-image: url(10626614i.png);
+    #        background-repeat: repeat-x;
+        }
+        /* 画面幅の100%の幅で画像を表示 */
+        .image-vw {
+          width : 100vw ;
+        }
+        .todo-taskblock{
+          display: flex;                /*内部要素の横並び*/
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+        }
+/*        .todo-allitem{
+          text-align: left;
+          border: 1px solid #3f5170;
+          width: 50vw;
+          margin-right: 20px;
+        }
+        .todo-item{
+          text-align: left;
+          border-bottom: 1px dotted #3f5170;
+          margin: 10px 10px 0 10px;
+        }*/
+        .todo-allitem{
+          text-align: left;
+/*          border: 1px solid #3f5170;*/
+          width: 100vw;
+          margin-right: 20px;
+    /*      background-image: url(desk.jpg);*/
+        }
+        .todo-item{
+          text-align: left;
+/*          border-bottom: 1px solid #3f5170;*/
+          margin: 10px 10px 0 10px;
+          padding: 10px 20px 10px 20px;
+          background-image: url(/media/images/額縁背景5.png);       /*内部要素すべてに摘要*/
+          background-size: 100% 100%;
+    /*      background-color: #99ffcc;*/
+        }
+
+        .todo-btn{
+          text-align: left;
+/*          border: 1px solid #3f5170;*/
+          width: 15vw;
+          height: auto;
+          margin-left: 20px;
+        }
+
+        .card-w{
+            display: flex;
+            margin-bottom: 20px;
+          .card{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 30px;
+            border-radius: 30px;
+            position: relative;
+          background: transparent;
+          border-radius: 20px;
+          border: 1px solid rgba(255,255,255,0.2);
+
+            .card__icon{
+
+            }
+            .card__text{
+              text-align: center;
+            }
+          }
+        }
+
+
+
+        /* inset */
+        .card.inset {
+            box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48), inset -3px -3px 7px #FFFFFF;
+            i {
+                text-shadow: 1px 1px 1px #d6e1ef99, 0 0 0 #000, 1px 1px 1px #d6e1ef00;
+            }
+        }
+
+        .card.active {
+            box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6),
+              -9px -9px 16px rgba(255, 255, 255, 0.5),
+               inset 3px 3px 7px rgba(136, 165, 191, 0.48),
+              inset -3px -3px 7px #FFFFFF;
+            background: linear-gradient(318.32deg, rgba(163, 177, 198, 0.1) 0%, rgba(163, 177, 198, 0.1) 55%, rgba(163, 177, 198, 0.25) 100%);
+        }
+
+      </style>
+
+
+      <script>
+
+      var myWindow8;
+
+
+      function openWinChangeEquipment() {
+        myWindow8 = window.open("changeEquipment", "myWindow8", "top=200,left=200,width=1200,height=800");
+        self.close();
+      }
+      </script>
+
+
+
+
+</head>
+
+    <h2>キャラクタ</h2>
+
+    HP:{{ hp }}<br>
+    レベル:<span style="color:red">{{ level}}</span><br>
+    武器：{{ weapon }}<br>
+
+    <div class="todo-taskblock">
+        <div class="todo-allitem">
+          <div class="container wrapper"><!-- 追加   -->
+          <div class="row"><!-- 追加   -->
+
+<!--              {% for charDatas in todo %} -->
+                  <div class="card-w col-md-3"><!-- 追加   -->
+                  <div class="card inset" ><!-- 追加   -->
+              <!--    <div class="card neumorphism">-->
+                  <div class="card__icon"><!-- 追加   -->
+
+                  </div><!-- 追加   -->
+
+                      <div class="todo-item">
+                          <font size="5"><b>{{ name }}</b></font><br>
+                              <div class="card__text"><!-- 追加   -->
+
+                                HP:{{ hp }}<br>
+                                レベル:<span style="color:red">{{ level}}</span><br>
+                                武器：{{ weapon }}<br>
+                                防具　頭：{{ armorHead }}<br>
+                                防具　上：{{ armorUpper }}<br>
+                                防具　下：{{ armorLower }}<br>
+
+                                持ち金：{{ money}}<br>
+
+                              </div><!-- 追加   -->
+
+                      </div>
+
+                  </div><!-- 追加   -->
+                  </div><!-- 追加   -->
+<!--              {% endfor %} -->
+          </div><!-- 追加   -->
+          </div><!-- 追加   -->
+
+        </div>
+
+        <div class="todo-btn">
+            <button type="button" class="btn btn-primary" onclick="openWinChangeEquipment()">変更／終了</button>
+        </div>
+    </div>
