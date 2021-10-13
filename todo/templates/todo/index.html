@@ -195,6 +195,16 @@
         background: linear-gradient(318.32deg, rgba(163, 177, 198, 0.1) 0%, rgba(163, 177, 198, 0.1) 55%, rgba(163, 177, 198, 0.25) 100%);
     }
 
+    a.title{
+      color:#258039;
+      text-decoration:none;
+    }
+
+    a.title:hover {
+      color:#FF0099;
+      text-decoration:none;
+    }
+
   </style>
 
 
@@ -256,11 +266,15 @@
   </div>
 
   <div class="todo-buttonblock float-right">
-      <button type="button" class="btn" onclick="openWinTask()">タスクを登録</button>
-      <button type="button" class="btn" onclick="openWinCategory()">カテゴリーの追加・削除</button>
-      <button type="button" class="btn" onclick="openWinBuyEquipment()">装備を購入</button>
-      <button type="button" class="btn" onclick="openWinDispCharData()">ステータス確認</button>
+    <div class="d-grid gap-2 mx-auto">
+      <button type="button" class="btn btn-warning" onclick="openWinTask()">タスクを登録</button>
+      <button type="button" class="btn btn-warning" onclick="openWinCategory()">カテゴリーの追加・削除</button>
+      <button type="button" class="btn btn-warning" onclick="openWinBuyEquipment()">装備を購入</button>
+      <button type="button" class="btn btn-warning" onclick="openWinDispCharData()">ステータス確認</button>
+    </div>
   </div>
+
+
 
     {% if delete %}
     <p>delete</p>
@@ -297,21 +311,31 @@
 
         </div><!-- 追加   -->
 
-        <div class="todo-item">
+        <div class="card border-dark mb-3" style="max-width: 18rem;">
+
+        <!--<div class="todo-item">>
 
         <!--  ****************************************<br>-->
-        <a href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a><br>
+
+        <div class="card__text">
+        <div class="card-header">
+        {% if todos.deadline_date < now %}
+           締切日:<span style="color:cf3721">{{ todos.deadline_date　}}</span> <b>締め切りをすぎています！</b><br>
+        {% else %}
+           締切日:<span style="color:31a9b8">{{ todos.deadline_date　}}</span><br>
+        {% endif %}
+        </div>
+
+        <div class="card-body text-dark">
+          <h5 class="card-title"><a class="title" href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a></h5>
 
           <div class="card__text"><!-- 追加   -->
-             カテゴリー:{{　todos.category　}}<br>
-             {% if todos.deadline_date < now %}
-                締切日:<span style="color:red">{{ todos.deadline_date　}}</span> <b name="deadlineMsg">締め切りをすぎています！</b><br>
-             {% else %}
-                締切日:<span style="color:blue">{{ todos.deadline_date　}}</span><b name="deadlineMsg"></b><br>
-             {% endif %}
-             難易度：{{　todos.level　}}<br>
-             タスクNO：<span name="todosNo">{{　todos.pk　}}<br>
+          <p class="card-text">カテゴリー:{{　todos.category　}}<br>
+          難易度：{{　todos.level　}}<br>
+          タスクNO：<span name="todosNo">{{　todos.pk　}}<br>
           </div><!-- 追加   -->
+        </div>
+        </div>
 
         <form method="POST" action="{% url 'todo:delete' todos.pk %}">
             {% csrf_token %}
@@ -326,7 +350,7 @@
         </form>
         <!--  ****************************************<br> -->
          </div>
-
+         <!-- </div>
          </div><!-- 追加   -->
 
     {% endfor %}
