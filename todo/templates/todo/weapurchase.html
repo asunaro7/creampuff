@@ -1,0 +1,31 @@
+<html>
+<meta http-equiv="content-type" charset="UTF-8">
+
+{% load static %}
+  <head>
+    <title>武器購入画面</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <h1>武器屋</h1>
+
+    <p>持ち金 1000$</p>
+    {% block contents %}
+
+    {{ w0.name }} ： 攻撃力{{ w0.power }} ・ 回復力{{ w0.recov }} ： {{w0.price}} $
+    <button>購入</button>
+    <br>
+    {{ w1.name }} ： 攻撃力{{ w1.power }} ・ 回復力{{ w1.recov }} ： {{w1.price}} $
+    <button>購入</button>
+    <br>
+    
+    <button>購入</button>
+
+
+
+
+
+    {% endblock %}
+
+  </body>
+</html>

@@ -182,10 +182,10 @@ def deadline_date(request):
 #    return redirect('todo:index')
     return redirect('todo:index', {'user': user})
 
-"""武器購入画面表示"""
-def buyWeapon2(request):
-    todo = Todo.objects.order_by('title')
-    return render(request, 'todo/buyWeapon.html', {'todo': todo})
+#"""武器購入画面表示"""
+#def buyWeapon2(request):
+    #todo = Todo.objects.order_by('title')
+    #return render(request, 'todo/buyWeapon.html', {'todo': todo})
 
 """武器購入画面表示"""
 def buyEquipment(request):
@@ -461,3 +461,23 @@ def changeComplete(request):
         Player.ArmorUpper[i] = Manekin.ArmorUpper[i]
         Player.ArmorLower[i] = Manekin.ArmorLower[i]
     return redirect('todo:dispCharData')
+
+
+
+
+
+"""武器購入"""
+def weapurchase(request):
+    dic = [{'name':'ダイヤの剣','power':1000,'recov':0,'price':1000},
+    {'name':'武器2','power':2000,'recov':200,'price':2000}]
+
+    
+
+    context={
+      'w0':dic[0],
+      'w1':dic[1],
+
+
+    }
+
+    return render(request, 'todo/weapurchase.html', context)
