@@ -24,6 +24,10 @@ urlpatterns = [
 
         #path('buyWeapon2', views.buyWeapon2, name='buyWeapon2'),    # ←追加
         path('weapurchase/', views.weapurchase, name='weapurchase'),
+        path('<int:id>/weaponP/', views.weaponP, name='weaponP'),
+        path('<int:id>/ArmorHP/', views.ArmorHP, name='ArmorHP'),
+        path('<int:id>/ArmorUP/', views.ArmorUP, name='ArmorUP'),
+        path('<int:id>/ArmorLP/', views.ArmorLP, name='ArmorLP'),
 
         path('dispCharData', views.dispCharData, name='dispCharData'),    # ←追加
         path('changeEquipment', views.changeEquipment, name='changeEquipment'),    # ←追加

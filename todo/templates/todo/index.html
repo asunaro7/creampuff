@@ -2,13 +2,17 @@
 {% load static %}
 <head>
   <title>RPGタスク</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
 
   <style>
     body{
@@ -331,13 +335,13 @@
         <div class="card-body text-dark">
           <h5 class="card-title"><a class="title" href="{% url 'todo:detail' todos.pk %}"><font size="5"><b>{{ todos.title }}</b></font></a></h5>
 
-          <div class="card__text"><!-- 追加   -->
+          <!--  ****************************************<br> -<div class="card__text"><!-- 追加   -->
           <p class="card-text">カテゴリー:{{　todos.category　}}<br>
           難易度：{{　todos.level　}}<br>
           タスクNO：<span name="todosNo">{{　todos.pk　}}<br>
           </div><!-- 追加   -->
         </div>
-        </div>
+
 
         <form method="POST" action="{% url 'todo:delete' todos.pk %}">
             {% csrf_token %}
@@ -351,6 +355,7 @@
             <button type="submit" name="compBtn"><span style="color:red">完了</span></button>
         </form>
         <!--  ****************************************<br> -->
+         </div>
          </div>
          <!-- </div>
          </div><!-- 追加   -->

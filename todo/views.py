@@ -468,16 +468,151 @@ def changeComplete(request):
 
 """武器購入"""
 def weapurchase(request):
-    dic = [{'name':'ダイヤの剣','power':1000,'recov':0,'price':1000},
-    {'name':'武器2','power':2000,'recov':200,'price':2000}]
 
-    
+    wpn = MyWeapon.objects.order_by('myName')
+    amrH = MyArmorHead.objects.order_by('myName')
+    amrU = MyArmorUpper.objects.order_by('myName')
+    amrL = MyArmorLower.objects.order_by('myName')
 
-    context={
-      'w0':dic[0],
-      'w1':dic[1],
+    money = Player.money
 
 
+    if request.method == 'POST':
+        if 'button' in request.POST:
+
+            wpn.num += 1
+            weapon.save()
+        elif 'button' in request.POST:
+            amrH.num = armH.num+1
+
+        elif 'button3' in request.POST:
+            amrU.num = armU.num+1
+
+        elif 'button4' in request.POST:
+            amrL.num = armL.num+1
+    context = {
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL,
+
+    'money':money,
+
+    'P_weapon':Player.Weapon[0],
+    'P_armorHead':Player.ArmorHead[0],
+    'P_armorUpper':Player.ArmorUpper[0],
+    'P_armorLower':Player.ArmorLower[0],
+
+    'M_weapon':Manekin.Weapon[0],
+    'M_armorHead':Manekin.ArmorHead[0],
+    'M_armorUpper':Manekin.ArmorUpper[0],
+    'M_armorLower':Manekin.ArmorLower[0],
+    }
+
+    return render(request, 'todo/weapurchase.html', context)
+
+
+def weaponP(request, id):
+    wpn = get_object_or_404(MyWeapon,pk=id)
+    amrH = MyArmorHead.objects.order_by('myName')
+    amrU = MyArmorUpper.objects.order_by('myName')
+    amrL = MyArmorLower.objects.order_by('myName')
+    money = Player.money
+    user = User.objects.first()
+
+    if request.method == 'POST':
+        if 'button1' in request.POST:
+            user.money = user.money-wpn.price
+            wpn.num = wpn.num+1
+            wpn.save()
+            user.save()
+
+    wpn = MyWeapon.objects.order_by('myName')
+
+
+    context = {
+    'money':money,
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL
+    }
+
+    return render(request, 'todo/weapurchase.html', context)
+
+
+def ArmorHP(request, id):
+    amrH = get_object_or_404(MyArmorHead,pk=id)
+    wpn = MyWeapon.objects.order_by('myName')
+    amrU = MyArmorUpper.objects.order_by('myName')
+    amrL = MyArmorLower.objects.order_by('myName')
+
+    money = Player.money
+
+    if request.method == 'POST':
+        if 'button2' in request.POST:
+            amrH.num = amrH.num+1
+            amrH.save()
+
+    amrH = MyArmorHead.objects.order_by('myName')
+
+    context = {
+    'money':money,
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL
+    }
+
+    return render(request, 'todo/weapurchase.html', context)
+
+def ArmorUP(request, id):
+    amrU = get_object_or_404(MyArmorUpper,pk=id)
+    wpn = MyWeapon.objects.order_by('myName')
+    amrH = MyArmorHead.objects.order_by('myName')
+    amrL = MyArmorLower.objects.order_by('myName')
+
+    money = Player.money
+
+    if request.method == 'POST':
+        if 'button3' in request.POST:
+            amrU.num = amrU.num+1
+            amrU.save()
+
+    amrU = MyArmorUpper.objects.order_by('myName')
+
+    context = {
+    'money':money,
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL
+    }
+
+    return render(request, 'todo/weapurchase.html', context)
+
+
+def ArmorLP(request, id):
+    amrL = get_object_or_404(MyArmorLower,pk=id)
+    wpn = MyWeapon.objects.order_by('myName')
+    amrH = MyArmorHead.objects.order_by('myName')
+    amrU = MyArmorUpper.objects.order_by('myName')
+
+    money = Player.money
+
+    if request.method == 'POST':
+        if 'button4' in request.POST:
+            amrL.num = amrL.num+1
+            amrL.save()
+
+    amrL = MyArmorLower.objects.order_by('myName')
+
+    context = {
+    'money':money,
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL
     }
 
     return render(request, 'todo/weapurchase.html', context)

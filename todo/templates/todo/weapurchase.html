@@ -9,23 +9,91 @@
   <body>
     <h1>武器屋</h1>
 
-    <p>持ち金 1000$</p>
-    {% block contents %}
-
-    {{ w0.name }} ： 攻撃力{{ w0.power }} ・ 回復力{{ w0.recov }} ： {{w0.price}} $
-    <button>購入</button>
-    <br>
-    {{ w1.name }} ： 攻撃力{{ w1.power }} ・ 回復力{{ w1.recov }} ： {{w1.price}} $
-    <button>購入</button>
-    <br>
-    
-    <button>購入</button>
+    <p>持ち金 : {{ money }} $</p>
 
 
+    <h1>武器</h1><br>
+    {% for myWeapons in wpn %}
 
 
+            <font size="5"><b>{{ myWeapons.myName }}</b></font><br>
 
-    {% endblock %}
+            攻撃力：{{myWeapons.attackPower}}<br>
+            防御力：{{myWeapons.defensePower}}<br>
+            回復力：{{myWeapons.hpRecoveryPower}}<br>
+            価格：{{myWeapons.price}}<br>
+            所持数：{{myWeapons.num}}<br>
+            <form method="POST" action="{% url 'todo:weaponP' myWeapons.pk%}">
+                {% csrf_token %}
+                <button name="button1" type="submit"><span style="color:red">選択</span></button>
+
+            </form>
+
+
+    {% endfor %}
+
+
+        <h1>防具　頭</h1><br>
+
+        {% for myArmorHeads in amrH %}
+
+                <font size="5"><b>{{ myArmorHeads.myName }}</b></font><br>
+
+                攻撃力：{{myArmorHeads.attackPower}}<br>
+                防御力：{{myArmorHeads.defensePower}}<br>
+                回復力：{{myArmorHeads.hpRecoveryPower}}<br>
+                価格：{{myArmorHeads.price}}<br>
+                所持数：{{myArmorHeads.num}}<br>
+                <form method="POST" action="{% url 'todo:ArmorHP' myArmorHeads.pk %}">
+                    {% csrf_token %}
+                    <button name="button2" type="submit"><span style="color:red">選択</span></button>
+                </form>
+
+
+        {% endfor %}
+
+
+        <h1>防具　上</h1><br>
+
+        {% for myArmorUppers in amrU %}
+
+
+                <font size="5"><b>{{ myArmorUppers.myName }}</b></font><br>
+
+                攻撃力：{{myArmorUppers.attackPower}}<br>
+                防御力：{{myArmorUppers.defensePower}}<br>
+                回復力：{{myArmorUppers.hpRecoveryPower}}<br>
+                価格：{{myArmorUppers.price}}<br>
+                所持数：{{myArmorUppers.num}}<br>
+                <form method="POST" action="{% url 'todo:ArmorUP' myArmorUppers.pk %}">
+                    {% csrf_token %}
+                    <button name="button3" type="submit"><span style="color:red">選択</span></button>
+                </form>
+
+
+        {% endfor %}
+
+
+        <h1>防具　下</h1><br>
+
+        {% for myArmorLowers in amrL %}
+
+
+                <font size="5"><b>{{ myArmorLowers.myName }}</b></font><br>
+
+                攻撃力：{{myArmorLowers.attackPower}}<br>
+                防御力：{{myArmorLowers.defensePower}}<br>
+                回復力：{{myArmorLowers.hpRecoveryPower}}<br>
+                価格：{{myArmorLowers.price}}<br>
+                所持数：{{myArmorLowers.num}}<br>
+                <form method="POST" action="{% url 'todo:ArmorLP' myArmorLowers.pk %}">
+                    {% csrf_token %}
+                    <button name="button4" type="submit"><span style="color:red">選択</span></button>
+                </form>
+
+
+        {% endfor %}
+
 
   </body>
 </html>
