@@ -37,7 +37,11 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
+<<<<<<< HEAD
+VIRTUAL_ENV="C:\Users\madodai_hp\djangogirls5\myvenv"
+=======
 VIRTUAL_ENV="C:\Users\madodai_hp\djangogirls\myvenv"
+>>>>>>> origin/master
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
