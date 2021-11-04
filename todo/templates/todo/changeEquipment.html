@@ -1,15 +1,19 @@
+
     <!-- /todo/templates/todo/index.html -->
     {% load static %}
     <head>
       <title>RPGタスク</title>
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+<!--      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+
+<!--      <link rel="stylesheet" href="{% static 'css/style.css' %}">
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
       <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
       <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>-->
+
 
       <style>
         html * {
@@ -19,11 +23,13 @@
         h2 {
           color: blue;
           margin-left: 20px;
+          font-size: 32px;
           border-bottom: 1px dotted #3f5170;
         }
         h3 {
           color: black;
           margin-left: 16px;
+          font-size: 24px;
         }
         h4 {
           color: blue;
@@ -86,7 +92,7 @@
         }
         .todo-btn{
           text-align: center;
-          border: 1px solid #3f5170;
+/*          border: 1px solid #3f5170;*/
           width: 50vw;
           height: auto;
           margin-left: 20px;
@@ -95,48 +101,45 @@
       </style>
 
 </head>
-   <h2>装備変更画面</h2>
-
-   {% block contents %}
-   {% endblock %}
-   <div class="todo-gameblock">
-   </div>
 
     <h2>装備変更</h2>
 
-    <h3>名前：{{ name }}</h3><br>
-    <h3>持ち金：{{ money }}</h3><br>
+    <h3>名前：{{name}}</h3><br>
+    <h3>持ち金：{{money}}</h3><br>
     <div class="todo-taskblock">
-      <div class="todo-allitem">
+        <div class="todo-allitem">
             <h4>武器</h4><br>
-            <div class="todo-item">
-              <p1>装備武器：<br><span1>{{ weapon }}</span1></p1><br>
-              <p1>選択武器：<br><span2>{{user2.weapon}}</span2></p1><br>
+            <div class="todo-wearingItem">
+<!--              <p1>名前：{{user.brave_name}}</p1><br>-->
+              <p1>装備武器：<span1>{{P_weapon}}</span1></p1><br>
+              <p1>選択武器：<span2>{{M_weapon}}</span2></p1><br>
             </div>
 
             {% for myWeapons in wpn %}
 
-              <div class="todo-item">
-                    <font size="5"><b>{{ myWeapons.myName }}</b></font><br>
+                    <div class="todo-item">
+                        <font size="5"><b>{{ myWeapons.myName }}</b></font><br>
 
-                    攻撃力：{{myWeapons.attackPower}}<br>
-                    防御力：{{myWeapons.defensePower}}<br>
-                    回復力：{{myWeapons.hpRecoveryPower}}<br>
-                    価格：{{myWeapons.price}}<br>
-                    所持数：{{myWeapons.num}}<br>
-                    <form method="POST" action="{% url 'todo:weaponSelect' myWeapons.pk %}">
-                        {% csrf_token %}
-                        <button id="button1" type="submit"><span style="color:red">選択</span></button>
-                    </form>
-                </div>
+                        攻撃力：{{myWeapons.attackPower}}<br>
+                        防御力：{{myWeapons.defensePower}}<br>
+                        回復力：{{myWeapons.hpRecoveryPower}}<br>
+                        価格：{{myWeapons.price}}<br>
+                        所持数：{{myWeapons.num}}<br>
+                        <form method="POST" action="{% url 'todo:weaponSelect' myWeapons.pk %}">
+                            {% csrf_token %}
+                            <button id="button1" type="submit"><span style="color:red">選択</span></button>
+                        </form>
+                    </div>
 
             {% endfor %}
+
         </div>
         <div class="todo-allitem">
             <h4>防具　頭</h4><br>
             <div class="todo-wearingItem">
-                <p1>装備防具　頭：<br><span1>{{ armorHead }}</span1></p1><br>
-                <p1>選択防具　頭：<br><span2>{{user2.armorHead}}</span2></p1><br>
+<!--              <p1>名前：{{user.brave_name}}</p1><br>-->
+                <p1>装備防具　頭：<span1>{{P_armorHead}}</span1></p1><br>
+                <p1>選択防具　頭：<span2>{{M_armorHead}}</span2></p1><br>
             </div>
             {% for myArmorHeads in amrH %}
               <div class="todo-item">
@@ -159,8 +162,8 @@
             <h4>防具　上</h4><br>
             <div class="todo-wearingItem">
 <!--              <p1>名前：{{user.brave_name}}</p1><br>-->
-                <p1>装備防具　上：<br><span1>{{ armorUpper }}</span1></p1><br>
-                <p1>選択防具　上：<br><span2>{{user2.armorUpper}}</span2></p1><br>
+                <p1>装備防具　上：<span1>{{P_armorUpper}}</span1></p1><br>
+                <p1>選択防具　上：<span2>{{M_armorUpper}}</span2></p1><br>
             </div>
             {% for myArmorUppers in amrU %}
 
@@ -184,8 +187,8 @@
             <h4>防具　下</h4><br>
             <div class="todo-wearingItem">
 <!--              <p1>名前：{{user.brave_name}}</p1><br>-->
-                <p1>装備防具　下：<br><span1>{{ armorLower }}</span1></p1><br>
-                <p1>選択防具　下：<br><span2>{{user2.armorLower}}</span2></p1><br>
+                <p1>装備防具　下：<span1>{{P_armorLower}}</span1></p1><br>
+                <p1>選択防具　下：<span2>{{M_armorLower}}</span2></p1><br>
             </div>
             {% for myArmorLowers in amrL %}
 
@@ -208,7 +211,18 @@
         <div class="todo-btn">
             <form method="POST" action="{% url 'todo:changeComplete' %}">
                 {% csrf_token %}
-                <button type="submit"><span style="color:red">変更</span></button>
+                <button type="submit" class="btn btn-warning" ><span>変更</span></button>
+<!--                <button type="submit" class="btn" ><span style="color:red">変更</span></button>-->
             </form>
         </div>
     </div>
+
+
+          <script>
+    //      var myWindow10;
+
+
+    //      function changeComplete() {
+    //        myWindow10 = window.open("", "myWindow10", "top=200,left=200,width=600,height=300");
+    //      }
+          </script>

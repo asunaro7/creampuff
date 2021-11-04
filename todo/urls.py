@@ -29,6 +29,7 @@ urlpatterns = [
         path('<int:id>/ArmorUP/', views.ArmorUP, name='ArmorUP'),
         path('<int:id>/ArmorLP/', views.ArmorLP, name='ArmorLP'),
 
+        path('dispTaskLog', views.dispTaskLog, name='dispTaskLog'),    # ←追加
         path('dispCharData', views.dispCharData, name='dispCharData'),    # ←追加
         path('changeEquipment', views.changeEquipment, name='changeEquipment'),    # ←追加
 

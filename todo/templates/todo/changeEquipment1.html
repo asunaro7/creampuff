@@ -1,0 +1,214 @@
+    <!-- /todo/templates/todo/index.html -->
+    {% load static %}
+    <head>
+      <title>RPGタスク</title>
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+
+      <style>
+        html * {
+          box-sizing: border-box;       /*内部要素すべてに摘要*/
+        }
+
+        h2 {
+          color: blue;
+          margin-left: 20px;
+          border-bottom: 1px dotted #3f5170;
+        }
+        h3 {
+          color: black;
+          margin-left: 16px;
+        }
+        h4 {
+          color: blue;
+          margin-left: 16px;
+          font-size: 24px;
+        }
+        p1 {
+          color: green;
+          margin-left: 16px;
+          font-size: 18px;
+        }
+        span1 {
+          color: magenta;
+          margin-left: 16px;
+          font-size: 18px;
+        }
+        span2 {
+          color: orange;
+          margin-left: 16px;
+          font-size: 18px;
+        }
+        .todo-gameblock{
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+          width: 100vw;
+          height: 50px;
+          background-color: #c0c0c0;
+    #        background-image: url(10626614i.png);
+    #        background-repeat: repeat-x;
+        }
+        /* 画面幅の100%の幅で画像を表示 */
+        .image-vw {
+          width : 100vw ;
+        }
+        .todo-taskblock{
+          display: flex;                /*内部要素の横並び*/
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+        }
+        .todo-allitem{
+          text-align: left;
+          border: 1px solid #3f5170;
+          width: 50vw;
+          margin-right: 20px;
+        }
+        .todo-wearingItem{
+          text-align: left;
+          border-bottom: 1px dotted #3f5170;
+          margin: 10px 10px 0 10px;
+          padding: 10px 20px 10px 20px;
+          background-image: url(/media/images/木目調_淡いピンク.png);       /*内部要素すべてに摘要*/
+          background-size: 100% 100%;
+        }
+        .todo-item{
+          text-align: left;
+          border-bottom: 1px dotted #3f5170;
+          margin: 10px 10px 0 10px;
+          padding: 10px 20px 10px 20px;
+/*          background-image: url(/media/images/額縁背景5.png);*/       /*内部要素すべてに摘要*/
+/*          background-size: 100% 100%;*/
+          background-color: #99ffcc;
+        }
+        .todo-btn{
+          text-align: center;
+          border: 1px solid #3f5170;
+          width: 50vw;
+          height: auto;
+          margin-left: 20px;
+        }
+
+      </style>
+
+</head>
+   <h2>装備変更画面</h2>
+
+   {% block contents %}
+   {% endblock %}
+   <div class="todo-gameblock">
+   </div>
+
+    <h2>装備変更</h2>
+
+    <h3>名前：{{ name }}</h3><br>
+    <h3>持ち金：{{ money }}</h3><br>
+    <div class="todo-taskblock">
+      <div class="todo-allitem">
+            <h4>武器</h4><br>
+            <div class="todo-item">
+              <p1>装備武器：<br><span1>{{ weapon }}</span1></p1><br>
+              <p1>選択武器：<br><span2>{{user2.weapon}}</span2></p1><br>
+            </div>
+
+            {% for myWeapons in wpn %}
+
+              <div class="todo-item">
+                    <font size="5"><b>{{ myWeapons.myName }}</b></font><br>
+
+                    攻撃力：{{myWeapons.attackPower}}<br>
+                    防御力：{{myWeapons.defensePower}}<br>
+                    回復力：{{myWeapons.hpRecoveryPower}}<br>
+                    価格：{{myWeapons.price}}<br>
+                    所持数：{{myWeapons.num}}<br>
+                    <form method="POST" action="{% url 'todo:weaponSelect' myWeapons.pk %}">
+                        {% csrf_token %}
+                        <button id="button1" type="submit"><span style="color:red">選択</span></button>
+                    </form>
+                </div>
+
+            {% endfor %}
+        </div>
+        <div class="todo-allitem">
+            <h4>防具　頭</h4><br>
+            <div class="todo-wearingItem">
+                <p1>装備防具　頭：<br><span1>{{ armorHead }}</span1></p1><br>
+                <p1>選択防具　頭：<br><span2>{{user2.armorHead}}</span2></p1><br>
+            </div>
+            {% for myArmorHeads in amrH %}
+              <div class="todo-item">
+                    <font size="5"><b>{{ myArmorHeads.myName }}</b></font><br>
+
+                    攻撃力：{{myArmorHeads.attackPower}}<br>
+                    防御力：{{myArmorHeads.defensePower}}<br>
+                    回復力：{{myArmorHeads.hpRecoveryPower}}<br>
+                    価格：{{myArmorHeads.price}}<br>
+                    所持数：{{myArmorHeads.num}}<br>
+                    <form method="POST" action="{% url 'todo:armorHeadSelect' myArmorHeads.pk %}">
+                        {% csrf_token %}
+                        <button id="button1" type="submit"><span style="color:red">選択</span></button>
+                    </form>
+                </div>
+
+            {% endfor %}
+        </div>
+        <div class="todo-allitem">
+            <h4>防具　上</h4><br>
+            <div class="todo-wearingItem">
+<!--              <p1>名前：{{user.brave_name}}</p1><br>-->
+                <p1>装備防具　上：<br><span1>{{ armorUpper }}</span1></p1><br>
+                <p1>選択防具　上：<br><span2>{{user2.armorUpper}}</span2></p1><br>
+            </div>
+            {% for myArmorUppers in amrU %}
+
+              <div class="todo-item">
+                    <font size="5"><b>{{ myArmorUppers.myName }}</b></font><br>
+
+                    攻撃力：{{myArmorUppers.attackPower}}<br>
+                    防御力：{{myArmorUppers.defensePower}}<br>
+                    回復力：{{myArmorUppers.hpRecoveryPower}}<br>
+                    価格：{{myArmorUppers.price}}<br>
+                    所持数：{{myArmorUppers.num}}<br>
+                    <form method="POST" action="{% url 'todo:armorUpperSelect' myArmorUppers.pk %}">
+                        {% csrf_token %}
+                        <button id="button1" type="submit"><span style="color:red">選択</span></button>
+                    </form>
+                </div>
+
+            {% endfor %}
+        </div>
+        <div class="todo-allitem">
+            <h4>防具　下</h4><br>
+            <div class="todo-wearingItem">
+<!--              <p1>名前：{{user.brave_name}}</p1><br>-->
+                <p1>装備防具　下：<br><span1>{{ armorLower }}</span1></p1><br>
+                <p1>選択防具　下：<br><span2>{{user2.armorLower}}</span2></p1><br>
+            </div>
+            {% for myArmorLowers in amrL %}
+
+              <div class="todo-item">
+                    <font size="5"><b>{{ myArmorLowers.myName }}</b></font><br>
+
+                    攻撃力：{{myArmorLowers.attackPower}}<br>
+                    防御力：{{myArmorLowers.defensePower}}<br>
+                    回復力：{{myArmorLowers.hpRecoveryPower}}<br>
+                    価格：{{myArmorLowers.price}}<br>
+                    所持数：{{myArmorLowers.num}}<br>
+                    <form method="POST" action="{% url 'todo:armorLowerSelect' myArmorLowers.pk %}">
+                        {% csrf_token %}
+                        <button id="button1" type="submit"><span style="color:red">選択</span></button>
+                    </form>
+                </div>
+
+            {% endfor %}
+        </div>
+        <div class="todo-btn">
+            <form method="POST" action="{% url 'todo:changeComplete' %}">
+                {% csrf_token %}
+                <button type="submit"><span style="color:red">変更</span></button>
+            </form>
+        </div>
+    </div>

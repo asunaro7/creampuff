@@ -1,0 +1,174 @@
+
+    <!-- /todo/templates/todo/index.html -->
+    {% load static %}
+    <head>
+      <title>RPGタスク</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+<!--      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+
+
+      <style>
+        html * {
+          box-sizing: border-box;       /*内部要素すべてに摘要*/
+        }
+
+        h2 {
+          color: blue;
+          margin-left: 20px;
+          font-size: 32px;
+          border-bottom: 1px dotted #3f5170;
+        }
+        h3 {
+          color: black;
+          margin-left: 16px;
+        }
+        h4 {
+          color: blue;
+          margin-left: 16px;
+          font-size: 24px;
+        }
+        p1 {
+          color: green;
+          margin-left: 16px;
+          font-size: 18px;
+        }
+        table th,td {
+/*          width: auto !important;*/
+          white-space: nowrap;
+          padding : 20px 10px;
+        }
+/*        table td {
+          padding : 20px 10px;
+        }*/
+        th {
+          width: auto !important;
+          color:white; /*文字色*/
+          background-color: #008B8B; /*背景色*/
+          border:solid 1px #aaaaaa;
+        }
+        td {
+          width: auto !important;
+          color:white; /*文字色*/
+          background-color: #2196f3; /*背景色*/
+          border:solid 1px #aaaaaa;
+        }
+        span1 {
+          color: magenta;
+          margin-left: 16px;
+          font-size: 18px;
+        }
+        span2 {
+          color: orange;
+          margin-left: 16px;
+          font-size: 18px;
+        }
+        .todo-gameblock{
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+          width: 100vw;
+          height: 50px;
+          background-color: #c0c0c0;
+    #        background-image: url(10626614i.png);
+    #        background-repeat: repeat-x;
+        }
+        /* 画面幅の100%の幅で画像を表示 */
+        .image-vw {
+          width : 100vw ;
+        }
+        .todo-taskblock{
+          display: flex;                /*内部要素の横並び*/
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+        }
+        .todo-allitem{
+          text-align: left;
+/*          border: 1px solid #3f5170;*/
+          width: 50vw;
+          margin-right: 20px;
+        }
+        .todo-wearingItem{
+          text-align: left;
+          border-bottom: 1px dotted #3f5170;
+          margin: 10px 10px 0 10px;
+          padding: 10px 20px 10px 20px;
+          background-image: url(/media/images/木目調_淡いピンク.png);       /*内部要素すべてに摘要*/
+          background-size: 100% 100%;
+        }
+        .todo-item{
+          text-align: left;
+          border-bottom: 1px dotted #3f5170;
+          margin: 10px 10px 0 10px;
+          padding: 10px 20px 10px 20px;
+/*          background-image: url(/media/images/額縁背景5.png);*/       /*内部要素すべてに摘要*/
+/*          background-size: 100% 100%;*/
+/*          background-color: #99ffcc;*/
+        }
+        .todo-btn{
+          text-align: center;
+/*          border: 1px solid #3f5170;*/
+          width: 50vw;
+          height: auto;
+          margin-left: 20px;
+        }
+
+      </style>
+
+</head>
+
+    <h2>履歴</h2>
+
+    <div class="todo-taskblock">
+
+        <div class="todo-allitem">
+            <div class="todo-item">
+                <h4>タスク</h4><br>
+                <table>
+                    <tr>
+                        <th>タスクＮＯ</th><th>タイトル</th><th>カテゴリ</th><th>作成日</th><th>締切日</th><th>完了日</th><th>レベル</th><th>タスク完了数</th>
+                    </tr>
+                    {% for logs in log_T %}
+
+                                <tr>
+                                    <td>{{logs.taskNo}}</td><td>{{logs.title}}</td><td>{{logs.category}}</td><td>{{logs.created_date}}</td><td>{{logs.deadline_date}}</td><td>{{logs.complete_date}}</td><td>{{logs.level}}</td><td>{{logs.taskCompNum}}</td>
+                                </tr>
+
+                    {% endfor %}
+                </table>
+                <br>
+                <h4>戦闘</h4><br>
+                <table>
+                    <tr>
+                        <th>モンスター名</th><th>攻防</th><th>ＨＰ</th><th>攻撃力</th><th>ダメージ</th><th>プレイヤー名</th><th>ＨＰ</th><th>持ち金</th><th>レベル</th><th>戦闘日</th>
+                    </tr>
+                    {% for logs in log_B %}
+
+                                <tr>
+                                    <td>{{logs.name}}</td><td>{{logs.battle}}</td><td>{{logs.hp}}</td><td>{{logs.attackPower}}</td><td>{{logs.damegeHp}}</td><td>{{logs.pName}}</td><td>{{logs.pHp}}</td><td>{{logs.pMoney}}</td><td>{{logs.pLevel}}</td><td>{{logs.complete_date}}</td>
+                                </tr>
+
+                    {% endfor %}
+                </table>
+            </div>
+
+        </div>
+        <div class="todo-btn">
+            <form method="POST" action="{% url 'todo:changeComplete' %}">
+                {% csrf_token %}
+                <button type="button" class="btn btn-warning" onclick="ｗinClose()">閉じる</button>
+            </form>
+        </div>
+    </div>
+    <script>
+
+    var myWindow;
+
+
+    function ｗinClose() {
+        myWindow = window.close();
+    }
+    </script>

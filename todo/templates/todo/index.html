@@ -38,43 +38,47 @@
       height: 200px;
       background-color: #c0c0c0;
       background-repeat:repeat-x;
-      background-image: url(/media/images/モンスター森背景.jpg);       /*内部要素すべてに摘要*/
+      background-image: url(/images/モンスター森背景.jpg);       /*内部要素すべてに摘要*/
     }
     .todo-telopblock{
       color: white;
     }
     .todo-animeComment{
       position: absolute;
-      top: 50px;
-      left: calc(50% - 70px);
+      top: 30px;
+      left: calc(50% - 50px);
+      font-size: 20px;
       color: yellow;
       visibility: hidden;
     }
     .todo-animeComment1{
       position: absolute;
       top: 80px;
-      left: calc(50% - 90px);
+      left: calc(50% - 110px);
+      font-size: 20px;
       color: yellow;
       visibility: hidden;
     }
     .todo-animeComment2{
       position: absolute;
       top: 80px;
-      left: calc(50% + 70px);
+      left: calc(50% + 130px);
+      font-size: 20px;
       color: yellow;
       visibility: hidden;
     }
     .todo-animeComment3{
       position: absolute;
       top: 150px;
-      left: calc(50% - 110px);
+      left: calc(50% - 130px);
+      font-size: 20px;
       color: yellow;
       visibility: hidden;
     }
     .todo-enemyChar{
       position: absolute;
       top: 70px;
-      left: calc(50% - 80px);
+      left: calc(50% - 50px);
       visibility: hidden;
     }
     .todo-tasktitleblock{
@@ -85,10 +89,30 @@
       width: 50vw;
       margin: 20px 20px 0 0;     /*上、右、下、左*/
     }
-    .todo-todaymessageblock{
+/*    .todo-todaymessageblock{
       text-align: right;
       width: 50vw;
-      margin: 20px 20px 0 0;     /*上、右、下、左*/
+      margin: 20px 20px 0 0;
+    }
+    .todo-todaymessageblock:hover{
+      text-align: right;
+      width: 50vw;
+      margin: 20px 20px 0 0;
+
+      transform: rotate3d(1,0,0,360deg);
+      transition: 2s;
+    }*/
+    .todo-popupMessageblock{
+      position: absolute;
+      top: 150px;
+      left: calc(38%);
+      font-size: 48px;
+      color: yellow;
+
+/*      visibility: hidden;*/
+      text-align: center;
+/*      width: 50vw;*/
+      margin: 20px 20px 20px 20px;     /*上、右、下、左*/
     }
     .todo-taskblock{
       display: flex;                /*内部要素の横並び*/
@@ -121,14 +145,16 @@
 #      background-color: #c0c0c0;
     }
     .todo-messageblock{
-      margin: 30px 20px 0 20px;     /*上、右、下、左*/
-      width: 25vw;
+      text-align: center;
+      margin: 30px 0 0 20px;     /*上、右、下、左*/
+      width: 40vw;
       height: 20px;
       background-color: #c0c0c0;
     }
     .todo-messageblock:hover{
-      margin: 30px 20px 0 20px;     /*上、右、下、左*/
-      width: 25vw;
+      text-align: center;
+      margin: 30px 0 0 20px;     /*上、右、下、左*/
+      width: 40vw;
       height: 20px;
       background-color: #c0c0c0;
 
@@ -227,29 +253,34 @@
         <div class="todo-gameblock">
             {% block contents %}
                 <div class="todo-telopblock">
-                  現在の攻撃:{{ Player.attack }}　/　現在までの総タスク完了数:{{ Game.task_counter }}　/　現在までの総攻撃数:{{ Player.attack_sum }}<br>
-                  {% if Game.task_counter > 0 %}
-                  <p>
-                   {{ Game.attack_name }} は {{ Game.damage_name }} に {{ Game.attack_power }} 攻撃した <br>
-                   {{ Game.damage_name }} の HP は {{ Game.damage_a_hp }} になった
-                  </p>
-                  {% else %}
-                  <p>タスクを完了しよう！！</p>
-                  {% endif %}
+                    現在の攻撃:{{ Player.attack }}　/　現在までの総タスク完了数:{{ Game.task_counter }}　/　現在までの総攻撃数:{{ Player.attack_sum }}<br>
+                    {% if Game.task_counter > 0 %}
+                        <p>
+                        {{ Game.attack_name }} は {{ Game.damage_name }} に {{ Game.attack_power }} 攻撃した <br>
+                        {{ Game.damage_name }} の HP は {{ Game.damage_a_hp }} になった<br>
+                        {% if Game.deadlineFlg == 0 %}
+                            {{ Player.name }} の HP は {{ Player.hp }} に回復した<br>
+                            {{ Player.name }} の 所持金 は {{ Player.money }} になった<br>
+                        {% endif %}
+                        </p>
+                    {% else %}
+                        <p>タスクを完了しよう！！</p>
+                    {% endif %}
 
-                  {% if Game.mon %}
-                  <p>{{ Game.damage_name }}は倒された！レベルが上がりました！！</p>
-                  {% endif %}
+                    {% if Game.mon %}
+                        <p>{{ Game.damage_name }}は倒された！レベルが上がりました！！</p>
+                    {% endif %}
 
-                  {% if Game.pl %}
-                  <p>
-                    {{ Game.damage_name }}は倒されてしまった！ゲームオーバー！
-                    最初の敵から一から始めよう！
-                  </p>
-                  {% endif %}
+                    {% if Game.pl %}
+                        <p>
+                          {{ Game.damage_name }}は倒されてしまった！ゲームオーバー！
+                          最初の敵から一から始めよう！
+                        </p>
+                    {% endif %}
                 </div>
             {% endblock %}
-            <img class = "todo-enemyChar" id="enemyChar" src="/media/images/ドラゴン青140攻撃.png"><br>
+<!--            <img class = "todo-enemyChar" id="enemyChar" src="/images/ドラゴン青140攻撃.png"><br>-->
+            <img class = "todo-enemyChar" id="enemyChar" src=""><br>
             <div class = "todo-animeComment" id="animeComment">モンスターが現れた</div>
             <div class = "todo-animeComment1" id="animeComment1">バキ</div>
             <div class = "todo-animeComment2" id="animeComment2">バキ</div>
@@ -259,22 +290,25 @@
 
 </body>
 
+<div class="todo-popupMessageblock">
+    <p id="message3"></p><br>
+</div>
 <!----------------------------------------<br>-->
 
   <div class="todo-tasktitleblock">
       <h2 class="todo-tasktitle">タスク</h2>
-      <div class="todo-todaymessageblock">
+<!--      <div class="todo-todaymessageblock">
           <p id="message">こんにちは！</p><br>
-      </div>
+      </div>-->
       <div class="todo-messageblock">
           <p id="message2">こんにちは！</p><br>
       </div>
   </div>
-
   <div class="todo-buttonblock float-right">
     <div class="d-grid gap-2 mx-auto">
       <button type="button" class="btn btn-warning" onclick="openWinTask()">タスクを登録</button>
       <button type="button" class="btn btn-warning" onclick="openWinCategory()">カテゴリーの追加・削除</button>
+      <button type="button" class="btn btn-warning" onclick="openWinDispTaskLog()">履歴</button>
       <button type="button" class="btn btn-warning" onclick="openWinBuyEquipment()">装備を購入</button>
       <button type="button" class="btn btn-warning" onclick="openWinDispCharData()">ステータス確認</button>
     </div>
@@ -311,6 +345,9 @@
     <div class="container wrapper"><!-- 追加   -->
     <div class="row"><!-- 追加   -->
 
+<!--        <div class="todo-popupMessageblock">
+            <p id="message3"></p><br>
+        </div>-->
     {% for todos in todo %}
         <div class="card-w col-md-4"><!-- 追加   -->
         <div class="card__icon"><!-- 追加   -->
@@ -326,9 +363,9 @@
         <div class="card__text">
         <div class="card-header">
         {% if todos.deadline_date < now %}
-           締切日:<span style="color:cf3721">{{ todos.deadline_date　}}</span> <b>締め切りをすぎています！</b><br>
+           締切日:<span style="color:cf3721">{{ todos.deadline_date　}}</span> <b name="deadlineMsg"><br>締め切りをすぎています！</b><br>
         {% else %}
-           締切日:<span style="color:31a9b8">{{ todos.deadline_date　}}</span><br>
+           締切日:<span style="color:31a9b8">{{ todos.deadline_date　}}</span><b name="deadlineMsg"></b><br>
         {% endif %}
         </div>
 
@@ -370,39 +407,50 @@
   </div>
 
 <script>
-var myWindow,myWindow2,myWindow3,myWindow4;
+var myWindow,myWindow2,myWindow3,myWindow5,myWindow6;
 
 function openWinTask() {
   myWindow = window.open("{% url 'todo:new' %}",'_blank');
 }
 function openWinBuyEquipment() {
   //myWindow2 = window.open("{% url 'todo:weapurchase' %}",'_blank');
-  myWindow2 = window.open("{% url 'todo:weapurchase' %}", "myWindow6", "top=200,left=200,width=600,height=450");
+  myWindow2 = window.open("{% url 'todo:weapurchase' %}", "myWindow2","fullscreen=yes");
+  myWindow2.window.moveTo(0,0);
+  myWindow2.window.resizeTo(screen.availWidth,screen.availHeight);
 }
 function openWinDispCharData() {
-  myWindow3 = window.open("dispCharData", "myWindow7", "top=200,left=200,width=600,height=450");
+  myWindow3 = window.open("dispCharData", "myWindow3", "top=200,left=200,width=600,height=450");
 }
 function openWinCategory() {
-  myWindow4 = window.open("{% url 'todo:new_c' %}",'_blank');
+  myWindow5 = window.open("{% url 'todo:new_c' %}",'_blank');
 }
-
+function openWinDispTaskLog() {
+  myWindow6=window.open("dispTaskLog", "myWindow6","fullscreen=yes");
+  myWindow6.window.moveTo(0,0);
+  myWindow6.window.resizeTo(screen.availWidth,screen.availHeight);
+//  myWindow6 = window.open("dispTaskLog", "myWindow6", "top=200,left=200,width=600,height=450");
+}
 /*上段メッセージ*/
 var now = new Date();
-var elm = document.getElementById('message');                                   /*１箇所*/
+/*var elm = document.getElementById('message');*/                                   /*１箇所*/
 var elm2 = document.getElementById('message2');                                 /*１箇所*/
+var elm3 = document.getElementById('message3');                                 /*１箇所*/
 var hour = now.getHours();
-elm.style.background = '#ffcccc';
+/*elm.style.background = '#ffcccc';*/
+elm2.style.background = '#ffcccc';
 
 if (hour < 2){
-  elm.textContent = '健康も大事です、もうそろそろお休みになってはいかがでしょうか';
+    elm2.textContent = '健康も大事です、もうそろそろお休みになってはいかがでしょうか';
 } else if(hour > 22){
-  elm.textContent = '遅くまでがんばっているね、お疲れ様です。';
+    elm2.textContent = '遅くまでがんばっているね、お疲れ様です。';
+} else if(hour < 8){
+    elm2.textContent = 'おはよう！';
 } else if(hour < 12){
-  elm.textContent = '今日も一日頑張ろう！';
+    elm2.textContent = '今日も一日頑張ろう！';
 } else if(hour < 18){
-  elm.textContent = 'こんにちは！';
+    elm2.textContent = 'こんにちは！';
 } else{
-  elm.textContent = 'こんばんは！';
+    elm2.textContent = 'こんばんは！';
 }
 /****************/
 /*下段メッセージ*/
@@ -419,6 +467,7 @@ var todosNoElements = document.getElementsByName("todosNo");                    
 var storage = localStorage;
 var d = 0;s = 1;cnt = 0;
 var x = 10; y = -10;
+var timer11,timer12;
 /****************/
 /*完了ボタンでのメッセージ表示後一定時間（3秒）後のメッセージ表示*/
 var fn = function(){
@@ -435,10 +484,50 @@ var fn32 = function(){
     storage.completeFlg = 0;
 };
 /****************/
+var fn_displayMessage = function(){
+    console.log("133_fn_displayMessage:cnt2:"+cnt2);
+    cnt2 = cnt2 + 1;
+    if ( {{ Game.deadlineFlg}} == 1 ){
+        elm3.textContent = '残念だったけどよく頑張ったね！';
+    }else{
+        elm3.textContent = 'やったね！';
+    }
+    if (cnt2 <= 20){
+        if(cnt2 % 2 == 1){
+            console.log("134_fn_displayMessage:cnt2:"+cnt2);
+            elm3.style.visibility = "visible";
+        }else{
+            console.log("135_fn_displayMessage:cnt2:"+cnt2);
+            elm3.style.visibility = "hidden";
+        }
+    }else{
+        elm3.remove();
+    }
+};
+var fn_startPopupMessage = function(){
+    console.log("133_fn_startPopupMessage:cnt2:"+cnt2);
+    timer12=setInterval(fn_displayMessage , 300);
+}
+var fn_stopPopupMessage = function(){
+    console.log("133_fn_stopPopupMessage:cnt2:"+cnt2);
+    clearInterval(timer11);
+    clearInterval(timer12);
+}
+/****************/
 /*完了ボタン後あなたの攻撃アニメ表示処理(モンスターhp<=0、倒され飛んでいく時)*/
 var fn20 = function(){
     cnt = cnt + 1;
     if (cnt <= 20){
+        if ( {{ Game.n}} == 0 ){
+            enemyCharElement.src='/images/ドラゴン青140防御.png';
+        }else if ( {{ Game.n}} == 1 ){
+            enemyCharElement.src='/images/ドラゴン赤140防御.png';
+        }else if( {{ Game.n}} == 2 ){
+            enemyCharElement.src='/images/ドラゴン黄140防御.png';
+        }else{
+            enemyCharElement.src='/images/ドラゴン黒140防御.png';
+        }
+
     }else if (cnt <= 50){
         s = 1.5 - s;
         x = -x;y = -y;
@@ -476,6 +565,15 @@ var fn20 = function(){
 var fn21 = function(){
     cnt = cnt + 1;
     if (cnt <= 20){
+        if ( {{ Game.n}} == 0 ){
+            enemyCharElement.src='/images/ドラゴン青140防御.png';
+        }else if ( {{ Game.n}} == 1 ){
+            enemyCharElement.src='/images/ドラゴン赤140防御.png';
+        }else if( {{ Game.n}} == 2 ){
+            enemyCharElement.src='/images/ドラゴン黄140防御.png';
+        }else{
+            enemyCharElement.src='/images/ドラゴン黒140防御.png';
+        }
     }else if (cnt <= 50){
         s = 1.5 - s;
         x = -x;y = -y;
@@ -508,6 +606,15 @@ var fn21 = function(){
 var fn30 = function(){
     cnt = cnt + 1;
     if (cnt <= 20){
+        if ( {{ Game.n}} == 0 ){
+            enemyCharElement.src='/images/ドラゴン青140防御.png';
+        }else if ( {{ Game.n}} == 1 ){
+            enemyCharElement.src='/images/ドラゴン赤140防御.png';
+        }else if( {{ Game.n}} == 2 ){
+            enemyCharElement.src='/images/ドラゴン黄140防御.png';
+        }else{
+            enemyCharElement.src='/images/ドラゴン黒140防御.png';
+        }
     }else if (cnt <= 32){
         console.log("103_fn30:cnt:"+cnt+":x:"+x+" y:"+y);
         d = d + 90;
@@ -519,10 +626,19 @@ var fn30 = function(){
         s = s + 0.06;
         x = x - 40;y = y + 24;
         enemyCharElement.style.transform = "translate(" + x + "px," + y + "px) rotate(" + d + "deg) scale(" + s + "," + s + ")";
+        if ( {{ Game.n}} == 0 ){
+            enemyCharElement.src='/images/ドラゴン青140攻撃.png';
+        }else if ( {{ Game.n}} == 1 ){
+            enemyCharElement.src='/images/ドラゴン赤140攻撃.png';
+        }else if( {{ Game.n}} == 2 ){
+            enemyCharElement.src='/images/ドラゴン黄140攻撃.png';
+        }else{
+            enemyCharElement.src='/images/ドラゴン黒140攻撃.png';
+        }
         animeCommentElement.style.visibility = "visible";
   }else if (cnt <= 50 ){
       console.log("103_fn30:cnt:"+cnt+":x:"+x+" y:"+y);
-      animeCommentElement.textContent = 'サキュパスの攻撃！';
+      animeCommentElement.textContent = 'モンスターの攻撃！';
       animeCommentElement1.textContent = "ドスン";
       animeCommentElement2.textContent = "ドスン";
       animeCommentElement3.textContent = "ドスン";
@@ -576,14 +692,18 @@ if (storage.completeFlg == 1){
     if ( {{ Game.deadlineFlg}} == 1 ){
 
         elm2.textContent = '残念だったけどよく頑張ったね！';
-        var timer1 = setTimeout(fn, 3000);
+        var timer1 = setTimeout(fn, 10000);
         console.log("105_msgFlg2:"+storage.msgFlg2);
         storage.msgFlg2 = 99;
 
         enemyCharElement.style.visibility = "visible";
         animeCommentElement.style.visibility = "visible";
-        var timer2 = setInterval(fn30, 100);
-        var timer3 = setTimeout(fn32, 10000);
+        timer11 = setInterval(fn30, 100);
+        var timer2 = setTimeout(fn32, 10000);
+
+        cnt2 = 0;
+        var timer5 = setTimeout(fn_startPopupMessage, 5000);
+        var timer6 = setTimeout(fn_stopPopupMessage, 10000);
 
     }else{
 
@@ -598,13 +718,17 @@ if (storage.completeFlg == 1){
 
         if ( {{ Game.damage_a_hp }} > 0 ){
             console.log("107_msgFlg2:"+storage.msgFlg2);
-            var timer2 = setInterval(fn21, 100);
+            timer11 = setInterval(fn21, 100);
             var timer3 = setTimeout(fn22, 10000);
         }else{
             console.log("108_msgFlg2:"+storage.msgFlg2);
-            var timer2 = setInterval(fn20, 100);
+            timer11 = setInterval(fn20, 100);
             var timer3 = setTimeout(fn22, 10000);
         }
+        cnt2 = 0;
+        var timer5 = setTimeout(fn_startPopupMessage, 5000);
+        var timer6 = setTimeout(fn_stopPopupMessage, 10000);
+
     }
 
 }

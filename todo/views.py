@@ -1,7 +1,7 @@
 # /todo/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Todo, Category, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower, User, User2
+from .models import Todo, Category, TaskLog, BattleLog, MyWeapon, MyArmorHead, MyArmorUpper, MyArmorLower, User, User2
 from .models_game import Game, Player, Manekin
 from .forms import TodoForm
 from .forms_category import CategoryForm
@@ -115,36 +115,94 @@ def encount(request, id):
         Game.damage_name = Game.monster[n][0]
         Game.damage_a_hp = Game.monster[n][1]
 
-        Game.attack_power = int(field_value) * 100
+        Game.attack_power = int(int(field_value) * Player.Weapon[1] * 100)  #10/27変更：攻撃力＝タスクレベル＊武器攻撃力＊１００
         Player.attack_sum += Game.attack_power
         Player.attack = Game.attack_power
 
         Game.damage_a_hp -= Game.attack_power
+
         if Game.damage_a_hp <= 0:
             Game.mon = True
             Game.monster[n][1] = 0
             Player.level += 1
+            Game.damage_a_hp = 0
         else:
             Game.monster[n][1] = Game.damage_a_hp
+
+        Player.hp += int(int(field_value) * Player.Weapon[3] * 10)  #10/27追加：ＨＰ＝ＨＰ＋タスクレベル＊武器回復力＊１０
+        Player.money += int(int(field_value) * 1000)                #10/27追加：ｍｏｎｅｙ＝ｍｏｎｅｙ＋タスクレベル＊１０００
+
+        newLog_T = TaskLog.objects.create(id=id,category_id = 1)  #10/27追加（ここから）
+        newLog_T.taskNo = todo.id
+        newLog_T.taskCompNum = Game.task_counter
+        newLog_T.title = todo.title
+        newLog_T.category = todo.category
+        newLog_T.created_date = todo.created_date
+        newLog_T.deadline_date = todo.deadline_date
+        newLog_T.complete_date = timezone.now()
+        newLog_T.level = todo.level
+        newLog_T.save()                                             #10/27追加（ここまで）
+
+        newLog_B = BattleLog.objects.create(id=id)  #10/27追加（ここから）
+        newLog_B.name = Game.monster[n][0]
+        newLog_B.battle = "防御"
+        newLog_B.hp = Game.monster[n][1]
+        newLog_B.attackPower = 0
+        newLog_B.damegeHp = Game.attack_power
+        newLog_B.complete_date = timezone.now()
+
+        newLog_B.pName = Player.name
+        newLog_B.pHp = Player.hp
+        newLog_B.pMoney = Player.money
+        newLog_B.pLevel = Player.level
+        newLog_B.save()                                             #10/27追加（ここまで）
 
     else:                                      #締め切りがすぎている時
         Game.attack_name = Game.monster[n][0]
         Game.damage_name = Player.name
         Game.damage_a_hp = Player.hp
 
-        Game.attack_power = Game.monster[n][2]
+        #10/27変更：モンスターからの攻撃力＝モンスター攻撃力＊（１００－防具防御力の和）／１００
+        Game.attack_power = int(Game.monster[n][2]*(100 - Player.ArmorHead[2] - Player.ArmorUpper[2] - Player.ArmorLower[2])/100)  #10/27変更
 
         Game.damage_a_hp -= Game.attack_power
         if Game.damage_a_hp <= 0:
             Game.pl = True
             Player.hp = 0
             Player.level = 0
+            Game.damage_a_hp = 0
         else:
             Player.hp = Game.damage_a_hp
 
         Player.attack = 0
 
         Game.deadlineFlg = 1
+
+        newLog_T = TaskLog.objects.create(id=id,category_id = 1)  #10/27追加（ここから）
+        newLog_T.taskNo = todo.id
+        newLog_T.taskCompNum = Game.task_counter
+        newLog_T.title = todo.title
+        newLog_T.category = todo.category
+        newLog_T.created_date = todo.created_date
+        newLog_T.deadline_date = todo.deadline_date
+        newLog_T.complete_date = timezone.now()
+        newLog_T.level = todo.level
+        newLog_T.save()                                           #10/27追加（ここまで）
+
+        newLog_B = BattleLog.objects.create(id=id)  #10/27追加（ここから）
+        newLog_B.name = Game.monster[n][0]
+        newLog_B.battle = "攻撃"
+        newLog_B.hp = Game.monster[n][1]
+        newLog_B.attackPower = Game.attack_power
+        newLog_B.damegeHp = 0
+        newLog_B.complete_date = timezone.now()
+
+        newLog_B.pName = Player.name
+        newLog_B.pHp = Player.hp
+        newLog_B.pMoney = Player.money
+        newLog_B.pLevel = Player.level
+        newLog_B.save()                                           #10/27追加（ここまで）
+
 
     if Player.hp == 0:
         for monster in Game.monster:
@@ -186,6 +244,64 @@ def deadline_date(request):
 #def buyWeapon2(request):
     #todo = Todo.objects.order_by('title')
     #return render(request, 'todo/buyWeapon.html', {'todo': todo})
+
+
+"""タスクログ表示"""
+def dispTaskLog(request):
+    log_T = TaskLog.objects.order_by('complete_date')
+    log_B = BattleLog.objects.order_by('complete_date')
+
+#    return render(request, 'todo/dispTaskLog.html', {'log': log})
+
+    wpn = MyWeapon.objects.order_by('myName')
+    amrH = MyArmorHead.objects.order_by('myName')
+    amrU = MyArmorUpper.objects.order_by('myName')
+    amrL = MyArmorLower.objects.order_by('myName')
+
+    name = Player.name
+    hp = Player.hp
+    money = Player.money
+    level = Player.level
+
+    Manekin.Weapon[0] = Player.Weapon[0]
+    Manekin.ArmorHead[0] = Player.ArmorHead[0]
+    Manekin.ArmorUpper[0] = Player.ArmorUpper[0]
+    Manekin.ArmorLower[0] = Player.ArmorLower[0]
+
+    txt2 = {
+
+    'wpn': wpn,
+    'amrH': amrH,
+    'amrU': amrU,
+    'amrL': amrL,
+
+    'name':name,
+    'hp':hp,
+    'money':money,
+    'level':level,
+
+    'P_weapon':Player.Weapon[0],
+    'P_armorHead':Player.ArmorHead[0],
+    'P_armorUpper':Player.ArmorUpper[0],
+    'P_armorLower':Player.ArmorLower[0],
+
+    'M_weapon':Manekin.Weapon[0],
+    'M_armorHead':Manekin.ArmorHead[0],
+    'M_armorUpper':Manekin.ArmorUpper[0],
+    'M_armorLower':Manekin.ArmorLower[0],
+
+    'log_T':log_T,
+    'log_B':log_B,
+    }
+
+
+    return render(request, 'todo/dispTaskLog.html', txt2)
+
+
+"""武器購入画面表示"""
+def buyWeapon2(request):
+    todo = Todo.objects.order_by('title')
+    return render(request, 'todo/buyWeapon.html', {'todo': todo})
 
 """武器購入画面表示"""
 def buyEquipment(request):
@@ -518,20 +634,19 @@ def weaponP(request, id):
     amrU = MyArmorUpper.objects.order_by('myName')
     amrL = MyArmorLower.objects.order_by('myName')
     money = Player.money
-    user = User.objects.first()
 
     if request.method == 'POST':
         if 'button1' in request.POST:
-            user.money = user.money-wpn.price
-            wpn.num = wpn.num+1
-            wpn.save()
-            user.save()
+            if Player.money-wpn.price >= 0:
+                Player.money = Player.money-wpn.price
+                wpn.num = wpn.num+1
+                wpn.save()
 
     wpn = MyWeapon.objects.order_by('myName')
 
 
     context = {
-    'money':money,
+    'money':Player.money,
     'wpn': wpn,
     'amrH': amrH,
     'amrU': amrU,
@@ -551,13 +666,15 @@ def ArmorHP(request, id):
 
     if request.method == 'POST':
         if 'button2' in request.POST:
-            amrH.num = amrH.num+1
-            amrH.save()
+            if Player.money-amrH.price >= 0:
+                amrH.num = amrH.num+1
+                Player.money = Player.money-amrH.price
+                amrH.save()
 
     amrH = MyArmorHead.objects.order_by('myName')
 
     context = {
-    'money':money,
+    'money':Player.money,
     'wpn': wpn,
     'amrH': amrH,
     'amrU': amrU,
@@ -576,13 +693,15 @@ def ArmorUP(request, id):
 
     if request.method == 'POST':
         if 'button3' in request.POST:
-            amrU.num = amrU.num+1
-            amrU.save()
+            if Player.money-amrU.price >= 0:
+                amrU.num = amrU.num+1
+                Player.money = Player.money-amrU.price
+                amrU.save()
 
     amrU = MyArmorUpper.objects.order_by('myName')
 
     context = {
-    'money':money,
+    'money':Player.money,
     'wpn': wpn,
     'amrH': amrH,
     'amrU': amrU,
@@ -602,13 +721,15 @@ def ArmorLP(request, id):
 
     if request.method == 'POST':
         if 'button4' in request.POST:
-            amrL.num = amrL.num+1
-            amrL.save()
+            if Player.money-amrL.price >= 0:
+                amrL.num = amrL.num+1
+                Player.money = Player.money-amrL.price
+                amrL.save()
 
     amrL = MyArmorLower.objects.order_by('myName')
 
     context = {
-    'money':money,
+    'money':Player.money,
     'wpn': wpn,
     'amrH': amrH,
     'amrU': amrU,

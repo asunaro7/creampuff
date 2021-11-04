@@ -1,10 +1,11 @@
 
-    <!-- /todo/templates/todo/ -->
+    <!-- /todo/templates/todo/index.html -->
     {% load static %}
     <head>
       <title>RPGタスク</title>
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+<!--      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
       <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 
@@ -16,6 +17,7 @@
         h2 {
           color: blue;
           margin-left: 20px;
+          font-size: 32px;
           border-bottom: 1px dotted #3f5170;
         }
         .todo-gameblock{
@@ -36,17 +38,22 @@
         }
         .todo-allitem{
           text-align: left;
+/*          border: 1px solid #3f5170;*/
           width: 50vw;
           margin-right: 20px;
         }
         .todo-item{
           text-align: left;
+/*          border-bottom: 1px dotted #3f5170;*/
           margin: 10px 10px 0 10px;
           padding: 10px 20px 10px 20px;
+/*          background-image: url(/media/images/額縁背景5.png);*/       /*内部要素すべてに摘要*/
+/*          background-size: 100% 100%;*/
           background-color: #99ffcc;
         }
         .todo-btn{
           text-align: left;
+/*          border: 1px solid #3f5170;*/
           width: 30vw;
           height: auto;
           margin-left: 20px;
@@ -58,9 +65,15 @@
 
       var myWindow8;
 
-
       function openWinChangeEquipment() {
-        myWindow8 = window.open("changeEquipment", "myWindow8", "top=200,left=200,width=1200,height=800");
+//        myWindow8 = window.open("changeEquipment", "myWindow8", "top=200,left=200,width=1200,height=800");
+//        myWindow8 = window.open("changeEquipment", "myWindow8", "top=0,left=0,width=sw,height=sh");
+
+        myWindow8=window.open("changeEquipment", "myWindow8","fullscreen=yes");
+        myWindow8.window.moveTo(0,0);
+        myWindow8.window.resizeTo(screen.availWidth,screen.availHeight);
+
+
         self.close();
       }
       </script>
@@ -70,10 +83,11 @@
 
 </head>
 
-    <h2>キャラクタ</h2>
+    <h2>プレイヤー</h2>
 
     <div class="todo-taskblock">
         <div class="todo-allitem">
+
               <div class="todo-item">
                     <font size="5"><b>{{ name }}</b></font><br>
 
@@ -87,9 +101,10 @@
                     持ち金：{{ money}}<br>
 
                 </div>
+
         </div>
 
         <div class="todo-btn">
-            <button type="button" class="btn" onclick="openWinChangeEquipment()">変更</button>
+            <button type="button" class="btn btn-warning" onclick="openWinChangeEquipment()">変更</button>
         </div>
     </div>

@@ -1,0 +1,95 @@
+
+    <!-- /todo/templates/todo/ -->
+    {% load static %}
+    <head>
+      <title>RPGタスク</title>
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+      <style>
+        html * {
+          box-sizing: border-box;       /*内部要素すべてに摘要*/
+        }
+
+        h2 {
+          color: blue;
+          margin-left: 20px;
+          border-bottom: 1px dotted #3f5170;
+        }
+        .todo-gameblock{
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+          width: 100vw;
+          height: 50px;
+          background-color: #c0c0c0;
+    #        background-image: url(10626614i.png);
+    #        background-repeat: repeat-x;
+        }
+        /* 画面幅の100%の幅で画像を表示 */
+        .image-vw {
+          width : 100vw ;
+        }
+        .todo-taskblock{
+          display: flex;                /*内部要素の横並び*/
+          margin: 20px 20px 0 20px;     /*上、右、下、左*/
+        }
+        .todo-allitem{
+          text-align: left;
+          width: 50vw;
+          margin-right: 20px;
+        }
+        .todo-item{
+          text-align: left;
+          margin: 10px 10px 0 10px;
+          padding: 10px 20px 10px 20px;
+          background-color: #99ffcc;
+        }
+        .todo-btn{
+          text-align: left;
+          width: 30vw;
+          height: auto;
+          margin-left: 20px;
+        }
+      </style>
+
+
+      <script>
+
+      var myWindow8;
+
+
+      function openWinChangeEquipment() {
+        myWindow8 = window.open("changeEquipment", "myWindow8", "top=200,left=200,width=1200,height=800");
+        self.close();
+      }
+      </script>
+
+
+
+
+</head>
+
+    <h2>キャラクタ</h2>
+
+    <div class="todo-taskblock">
+        <div class="todo-allitem">
+              <div class="todo-item">
+                    <font size="5"><b>{{ name }}</b></font><br>
+
+                    HP:{{ hp }}<br>
+                    レベル:<span style="color:red">{{ level}}</span><br>
+                    武器：{{ weapon }}<br>
+                    防具　頭：{{ armorHead }}<br>
+                    防具　上：{{ armorUpper }}<br>
+                    防具　下：{{ armorLower }}<br>
+
+                    持ち金：{{ money}}<br>
+
+                </div>
+        </div>
+
+        <div class="todo-btn">
+            <button type="button" class="btn" onclick="openWinChangeEquipment()">変更</button>
+        </div>
+    </div>

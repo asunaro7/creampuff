@@ -39,7 +39,52 @@ class Todo(models.Model):
     def __str__(self):
         return self.title
 
+"""タスクログデータ"""
+class TaskLog(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    title = models.CharField('タイトル', max_length=50)
+    #text = models.TextField('詳細')
+    taskNo = models.IntegerField('タスクＮＯ',blank=True, null=True,default=1)
+    taskCompNum = models.IntegerField('タスク完了数',blank=True, null=True,default=0)
+    created_date = models.DateTimeField('作成日',default=timezone.now)
+    deadline_date = models.DateTimeField('締切日',blank=True, null=True)
+    complete_date = models.DateTimeField('完了日',blank=True, null=True)
+    l_category = (
+      ('1', '易'),
+      ('2', 'やや易'),
+      ('3', '普通'),
+      ('4', 'やや難'),
+      ('5', '難'),
+    )
+    level = models.CharField(
+         '難易度(易 1〜5 難)',
+         max_length=5,
+         default='',
+         choices=l_category
+         )
+
+    def __str__(self):
+        return self.title
+
+"""バトルログデータ"""
+class BattleLog(models.Model):
+    name = models.CharField('モンスター名', max_length=50)
+    battle = models.CharField('攻防', max_length=50)
+    hp = models.IntegerField('モンスターＨＰ',blank=True, null=True,default=1)
+    attackPower = models.IntegerField('モンスター攻撃力',blank=True, null=True,default=1)
+    damegeHp = models.IntegerField('モンスターダメージ',blank=True, null=True,default=1)
+    complete_date = models.DateTimeField('完了日',blank=True, null=True)
+
+    pName = models.CharField('プレイヤー名', max_length=50)
+    pHp = models.IntegerField('プレイヤーＨＰ',blank=True, null=True,default=1)
+    pMoney = models.IntegerField('プレイヤー持ち金',blank=True, null=True,default=1)
+    pLevel = models.IntegerField('プレイヤーレベル',blank=True, null=True,default=1)
+
+    def __str__(self):
+        return self.name
+
 """キャラクタデータ"""
+"""
 class CharData(models.Model):
     myName = models.CharField('名前',blank=True, null=True,default="", max_length=50)
     myHP = models.IntegerField('HP',blank=True, null=True,default=0)
@@ -60,7 +105,7 @@ class CharData(models.Model):
     )
 
     def __str__(self):
-        return self.myName
+        return self.myName"""
 
 """所持武器データ"""
 class MyWeapon(models.Model):

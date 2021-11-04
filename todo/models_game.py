@@ -13,7 +13,7 @@ class Player(models.Model):
     attack_sum = 0
 
     #[名前,攻撃力,防御力,HP回復力,購入額,所持数]
-    Weapon = ['普通の剣',10,0,0,0,1]
+    Weapon = ['普通の剣',10,0,5,0,1]
     ArmorHead = ['普通の兜',0,5,0,0,1]
     ArmorUpper = ['普通の鎧・上',0,5,0,0,1]
     ArmorLower = ['普通の鎧・下',0,5,0,0,1]
